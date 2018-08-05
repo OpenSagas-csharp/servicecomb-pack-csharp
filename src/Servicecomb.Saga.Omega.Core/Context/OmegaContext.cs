@@ -25,7 +25,7 @@ namespace Servicecomb.Saga.Omega.Core.Context
     {
         public static readonly string _global_tx_id_key = "X-Pack-Global-Transaction-Id";
         public static readonly string _local_tx_id_key = "X-Pack-Local-Transaction-Id";
-        private ThreadLocal<string> GlobalTxId = new ThreadLocal<string>();
+        private ThreadLocal<string> GlobalTxId { get; set; } = new ThreadLocal<string>();
         private ThreadLocal<string> LocalTxId = new ThreadLocal<string>();
         private IIdGenerator<String> IdGenerator;
 
@@ -45,6 +45,11 @@ namespace Servicecomb.Saga.Omega.Core.Context
         {
             GlobalTxId.Value = txId;
         }
+
+        //public string GlobalTxId()
+        //{
+        //    return globalTxId.get();
+        //}
 
         public string NewLocalTxId()
         {
