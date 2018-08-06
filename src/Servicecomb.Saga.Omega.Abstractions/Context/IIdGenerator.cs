@@ -20,6 +20,6 @@ namespace Servicecomb.Saga.Omega.Abstractions.Context
 {
     public interface IIdGenerator<T>
     {
-        T nextId();
+        T NextId();
     }
 }
