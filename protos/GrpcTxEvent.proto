@@ -20,7 +20,6 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "org.apache.servicecomb.saga.pack.contract.grpc";
 option csharp_namespace = "Servicecomb.Saga.Omega.Protocol";
-option java_outer_classname = "TxEventProto";
 
 service TxEventService {
   rpc OnConnected (GrpcServiceConfig) returns (stream GrpcCompensateCommand) {

@@ -38,10 +38,9 @@ namespace Servicecomb.Saga.Omega.Protocol {
             "KAwyqAEKDlR4RXZlbnRTZXJ2aWNlEj0KC09uQ29ubmVjdGVkEhIuR3JwY1Nl",
             "cnZpY2VDb25maWcaFi5HcnBjQ29tcGVuc2F0ZUNvbW1hbmQiADABEiUKCU9u",
             "VHhFdmVudBIMLkdycGNUeEV2ZW50GgguR3JwY0FjayIAEjAKDk9uRGlzY29u",
-            "bmVjdGVkEhIuR3JwY1NlcnZpY2VDb25maWcaCC5HcnBjQWNrIgBCYgoub3Jn",
-            "LmFwYWNoZS5zZXJ2aWNlY29tYi5zYWdhLnBhY2suY29udHJhY3QuZ3JwY0IM",
-            "VHhFdmVudFByb3RvUAGqAh9TZXJ2aWNlY29tYi5TYWdhLk9tZWdhLlByb3Rv",
-            "Y29sYgZwcm90bzM="));
+            "bmVjdGVkEhIuR3JwY1NlcnZpY2VDb25maWcaCC5HcnBjQWNrIgBCVAoub3Jn",
+            "LmFwYWNoZS5zZXJ2aWNlY29tYi5zYWdhLnBhY2suY29udHJhY3QuZ3JwY1AB",
+            "qgIfU2VydmljZWNvbWIuU2FnYS5PbWVnYS5Qcm90b2NvbGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
