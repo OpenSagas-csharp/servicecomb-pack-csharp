@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Transaction\TxCompensatedEvent.cs~RF288f6c.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Servicecomb.Saga.Omega.Abstractions\Servicecomb.Saga.Omega.Abstractions.csproj" />
     <ProjectReference Include="..\Servicecomb.Saga.Omega.Protocol\Servicecomb.Saga.Omega.Protocol.csproj" />
   </ItemGroup>
