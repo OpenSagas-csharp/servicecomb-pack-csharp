@@ -23,7 +23,7 @@ namespace Servicecomb.Saga.Omega.Core.Context
 {
     public class UniqueIdGenerator : IIdGenerator<string>
     {
-        public string nextId()
+        public string NextId()
         {
             return Guid.NewGuid().ToString();
         }

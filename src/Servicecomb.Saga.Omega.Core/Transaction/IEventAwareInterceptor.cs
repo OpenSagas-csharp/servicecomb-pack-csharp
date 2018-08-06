@@ -26,6 +26,6 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
 
         void PostIntercept(string parentTxId, string compensationMethod);
 
-        void OnError(string parentTxId, string compensationMethod, Exception throwable);
+        void OnError(string parentTxId, string compensationMethod, System.Exception throwable);
     }
 }

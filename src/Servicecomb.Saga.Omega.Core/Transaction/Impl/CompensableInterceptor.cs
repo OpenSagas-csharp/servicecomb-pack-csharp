@@ -7,28 +7,29 @@ namespace Servicecomb.Saga.Omega.Core.Transaction.Impl
 {
     public class CompensableInterceptor : IEventAwareInterceptor
     {
-        private OmegaContext omegaContext;
-        private IMessageSender _sender;
+        private readonly OmegaContext _omegaContext;
+        private readonly IMessageSender _sender;
 
         CompensableInterceptor(OmegaContext context, IMessageSender sender)
         {
             _sender = sender;
-            omegaContext = context;
+            _omegaContext = context;
         }
-        public void OnError(string parentTxId, string compensationMethod, Exception throwable)
+        public void OnError(string parentTxId, string compensationMethod, System.Exception throwable)
         {
-        //    return _sender.Send(new TxStartedEvent(omegaContext.GlobalTxId(), context.localTxId(), parentTxId, compensationMethod,
-        //timeout, retriesMethod, retries, message));
+            _sender.Send(new TxAbortedEvent(_omegaContext.GetGlobalTxId(), _omegaContext.GetLocalTxId(), parentTxId, compensationMethod,
+                throwable));
         }
 
         public void PostIntercept(string parentTxId, string compensationMethod)
         {
-            throw new NotImplementedException();
+             _sender.Send(new TxEndedEvent(_omegaContext.GetGlobalTxId(), _omegaContext.GetLocalTxId(), parentTxId, compensationMethod));
         }
 
         public AlphaResponse PreIntercept(string parentTxId, string compensationMethod, int timeout, string retriesMethod, int retries, params object[] message)
         {
-            throw new NotImplementedException();
+            return _sender.Send(new TxStartedEvent(_omegaContext.GetGlobalTxId(), _omegaContext.GetLocalTxId(), parentTxId, compensationMethod,
+                timeout, retriesMethod, retries, message));
         }
     }
 }

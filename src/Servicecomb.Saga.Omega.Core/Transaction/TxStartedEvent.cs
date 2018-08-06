@@ -6,7 +6,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
 {
     public class TxStartedEvent : TxEvent
     {
-        public TxStartedEvent(EventType type, string globalTxId, string localTxId, string parentTxId, string compensationMethod, int timeout, string retryMethod, int retries, params object[] payloads) : base(type, globalTxId, localTxId, parentTxId, compensationMethod, timeout, retryMethod, retries, payloads)
+        public TxStartedEvent(string globalTxId, string localTxId, string parentTxId, string compensationMethod, int timeout, string retryMethod, int retries, params object[] payloads) : base(EventType.TxStartedEvent, globalTxId, localTxId, parentTxId, compensationMethod, timeout, retryMethod, retries, payloads)
         {
         }
     }

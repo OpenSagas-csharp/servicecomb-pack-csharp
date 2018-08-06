@@ -25,7 +25,7 @@ namespace Servicecomb.Saga.Omega.Core.Context
     {
         public static readonly string _global_tx_id_key = "X-Pack-Global-Transaction-Id";
         public static readonly string _local_tx_id_key = "X-Pack-Local-Transaction-Id";
-        private ThreadLocal<string> GlobalTxId { get; set; } = new ThreadLocal<string>();
+        private ThreadLocal<string> GlobalTxId = new ThreadLocal<string>();
         private ThreadLocal<string> LocalTxId = new ThreadLocal<string>();
         private IIdGenerator<String> IdGenerator;
 
@@ -36,7 +36,7 @@ namespace Servicecomb.Saga.Omega.Core.Context
 
         public string NewGlobalTxId()
         {
-            var id = IdGenerator.nextId();
+            var id = IdGenerator.NextId();
             GlobalTxId.Value = id;
             return id;
         }
@@ -46,24 +46,24 @@ namespace Servicecomb.Saga.Omega.Core.Context
             GlobalTxId.Value = txId;
         }
 
-        //public string GlobalTxId()
-        //{
-        //    return globalTxId.get();
-        //}
+        public string GetGlobalTxId()
+        {
+            return GlobalTxId.Value;
+        }
 
         public string NewLocalTxId()
         {
-            String id = IdGenerator.nextId();
+            string id = IdGenerator.NextId();
             LocalTxId.Value = id;
             return id;
         }
 
-        public string localTxId()
+        public string GetLocalTxId()
         {
             return LocalTxId.Value;
         }
 
-        public void clear()
+        public void Clear()
         {
             //globalTxId.remove();
             //localTxId.remove();
@@ -73,7 +73,7 @@ namespace Servicecomb.Saga.Omega.Core.Context
 
         public override string ToString()
         {
-            return $"OmegaContext{"{"}globalTxId={GlobalTxId.Value},localTxId={LocalTxId.Value}{"}"}";
+            return $"OmegaContext{{globalTxId={GlobalTxId.Value},localTxId={LocalTxId.Value}}}";
         }
     }
 }
