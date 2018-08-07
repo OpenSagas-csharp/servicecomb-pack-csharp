@@ -4,10 +4,4 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Transaction\**" />
-    <EmbeddedResource Remove="Transaction\**" />
-    <None Remove="Transaction\**" />
-  </ItemGroup>
-
 </Project>

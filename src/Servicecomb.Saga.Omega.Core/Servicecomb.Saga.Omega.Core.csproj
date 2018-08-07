@@ -9,6 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Grpc" Version="1.14.0" />
+    <PackageReference Include="Grpc.Core" Version="1.14.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Servicecomb.Saga.Omega.Abstractions\Servicecomb.Saga.Omega.Abstractions.csproj" />
     <ProjectReference Include="..\Servicecomb.Saga.Omega.Protocol\Servicecomb.Saga.Omega.Protocol.csproj" />
   </ItemGroup>
