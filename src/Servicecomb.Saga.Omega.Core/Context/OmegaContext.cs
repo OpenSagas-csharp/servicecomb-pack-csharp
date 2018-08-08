@@ -21,59 +21,65 @@ using System.Threading;
 
 namespace Servicecomb.Saga.Omega.Core.Context
 {
-    public class OmegaContext
+  public class OmegaContext
+  {
+    public static readonly string GlobalTxIdKey = "X-Pack-Global-Transaction-Id";
+    public static readonly string LocalTxIdKey = "X-Pack-Local-Transaction-Id";
+    private ThreadLocal<string> GlobalTxId = new ThreadLocal<string>();
+    private ThreadLocal<string> LocalTxId = new ThreadLocal<string>();
+    private IIdGenerator<String> IdGenerator;
+
+    public OmegaContext(IIdGenerator<string> idGenerator)
     {
-        public static readonly string _global_tx_id_key = "X-Pack-Global-Transaction-Id";
-        public static readonly string _local_tx_id_key = "X-Pack-Local-Transaction-Id";
-        private ThreadLocal<string> GlobalTxId = new ThreadLocal<string>();
-        private ThreadLocal<string> LocalTxId = new ThreadLocal<string>();
-        private IIdGenerator<String> IdGenerator;
-
-        public OmegaContext(IIdGenerator<string> idGenerator)
-        {
-            this.IdGenerator = idGenerator;
-        }
-
-        public string NewGlobalTxId()
-        {
-            var id = IdGenerator.NextId();
-            GlobalTxId.Value = id;
-            return id;
-        }
-
-        public void SetGlobalTxId(string txId)
-        {
-            GlobalTxId.Value = txId;
-        }
-
-        public string GetGlobalTxId()
-        {
-            return GlobalTxId.Value;
-        }
-
-        public string NewLocalTxId()
-        {
-            string id = IdGenerator.NextId();
-            LocalTxId.Value = id;
-            return id;
-        }
-
-        public string GetLocalTxId()
-        {
-            return LocalTxId.Value;
-        }
-
-        public void Clear()
-        {
-            //globalTxId.remove();
-            //localTxId.remove();
-            GlobalTxId.Value = null;
-            LocalTxId.Value = null;
-        }
-
-        public override string ToString()
-        {
-            return $"OmegaContext{{globalTxId={GlobalTxId.Value},localTxId={LocalTxId.Value}}}";
-        }
+      this.IdGenerator = idGenerator;
     }
+
+    public string NewGlobalTxId()
+    {
+      var id = IdGenerator.NextId();
+      GlobalTxId.Value = id;
+      return id;
+    }
+
+    public void SetGlobalTxId(string txId)
+    {
+      GlobalTxId.Value = txId;
+    }
+
+    public string GetGlobalTxId()
+    {
+      return GlobalTxId.Value;
+    }
+
+    public string NewLocalTxId()
+    {
+      string id = IdGenerator.NextId();
+      LocalTxId.Value = id;
+      return id;
+    }
+
+    public string GetLocalTxId()
+    {
+      return LocalTxId.Value;
+    }
+
+
+    public void SetLocalTxId(string localTxId)
+    {
+      LocalTxId.Value = localTxId;
+    }
+
+    public void Clear()
+    {
+      //globalTxId.remove();
+      //localTxId.remove();
+      GlobalTxId.Value = null;
+      LocalTxId.Value = null;
+    }
+
+    public override string ToString()
+    {
+      return $"OmegaContext{{globalTxId={GlobalTxId.Value},localTxId={LocalTxId.Value}}}";
+    }
+  }
 }
