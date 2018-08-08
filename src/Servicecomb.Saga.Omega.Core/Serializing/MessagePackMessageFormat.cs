@@ -15,13 +15,22 @@
  * limitations under the License.
  */
 
-using System;
+using JetBrains.Annotations;
+using MessagePack;
+using Servicecomb.Saga.Omega.Abstractions.Serializing;
 
-namespace Servicecomb.Saga.Omega.Abstractions.Transaction
+namespace Servicecomb.Saga.Omega.Core.Serializing
 {
-    public interface IMessageSerializer
+  public class MessagePackMessageFormat : IMessageFormat
+  {
+    public T Deserialize<T>([NotNull]byte[] message)
     {
-        byte[] Serialize(Object[] objects);
-        T Deserialize<T>(byte[] message);
+      return MessagePackSerializer.Deserialize<T>(message);
+    }
+
+    public byte[] Serialize([NotNull]object[] objects)
+    {
+      return MessagePackSerializer.Serialize(objects);
+    }
   }
 }

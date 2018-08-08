@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-using System;
+using Servicecomb.Saga.Omega.Abstractions.Transaction;
 
-namespace Servicecomb.Saga.Omega.Abstractions.Transaction
+namespace Servicecomb.Saga.Omega.Abstractions.Serializing
 {
-    public interface IMessageSerializer
-    {
-        byte[] Serialize(Object[] objects);
-        T Deserialize<T>(byte[] message);
+  public interface IMessageFormat : IMessageSerializer
+  {
   }
 }
