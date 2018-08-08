@@ -13,7 +13,6 @@
     <PackageReference Include="Grpc.Core" Version="1.14.0" />
     <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
     <PackageReference Include="MessagePack" Version="1.7.3.4" />
-    <PackageReference Include="NLog" Version="4.5.8" />
     <PackageReference Include="Polly" Version="6.1.0" />
   </ItemGroup>
 

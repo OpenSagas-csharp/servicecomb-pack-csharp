@@ -17,7 +17,6 @@
 
 using Google.Protobuf;
 using Grpc.Core;
-using Polly;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Transaction;
 using Servicecomb.Saga.Omega.Protocol;
@@ -41,13 +40,7 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
 
     public void OnConnected()
     {
-      Policy
-        .Handle<RpcException>()
-        .Retry(3, (exception, retryCount) =>
-        {
-          _client.OnConnected(_serviceConfig);
-        });
-     
+      _client.OnConnected(_serviceConfig);
     }
 
     public void OnDisconnected()
