@@ -1,0 +1,7 @@
+language: csharp
+solution: servicecomb-saga-csharp.sln
+mono: none
+dotnet: 2.1.302
+script:
+    - dotnet restore
+    - dotnet build
