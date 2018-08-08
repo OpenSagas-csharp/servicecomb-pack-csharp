@@ -17,6 +17,7 @@
 
 using Google.Protobuf;
 using Grpc.Core;
+using Polly;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Transaction;
 using Servicecomb.Saga.Omega.Protocol;
@@ -40,7 +41,13 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
 
     public void OnConnected()
     {
-      _client.OnConnected(_serviceConfig);
+      Policy
+        .Handle<RpcException>()
+        .Retry(3, (exception, retryCount) =>
+        {
+          _client.OnConnected(_serviceConfig);
+        });
+     
     }
 
     public void OnDisconnected()
@@ -60,13 +67,13 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
 
     public AlphaResponse Send(TxEvent @event)
     {
-      GrpcAck grpcAck = _client.OnTxEvent(ConvertEvent(@event));
+      var grpcAck = _client.OnTxEvent(ConvertEvent(@event));
       return new AlphaResponse(grpcAck.Aborted);
     }
 
     private GrpcTxEvent ConvertEvent(TxEvent @event)
     {
-      ByteString payloads = ByteString.CopyFrom(_serializer.Serialize(@event.Payloads));
+      var payloads = ByteString.CopyFrom(_serializer.Serialize(@event.Payloads));
       return new GrpcTxEvent()
       {
         ServiceName = _serviceConfig.ServiceName,
