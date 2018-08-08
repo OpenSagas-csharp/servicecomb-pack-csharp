@@ -18,27 +18,19 @@
 using System;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 
-namespace Servicecomb.Saga.Omega.Core.Logging
+namespace Servicecomb.Saga.Omega.Core.Logging.NLog
 {
-  public static class LogManager
+  public class NLogLoggerFactory : ILoggerFactory
   {
-    private static readonly ILoggerFactory defaultLoggerFactory = new NullLoggerFactory();
-    private static ILoggerFactory _loggerFactory;
+    private readonly NLogLoggerFactory _nLogLoggerFactory;
 
-    public static ILogger GetLogger(Type type)
+    public NLogLoggerFactory(NLogLoggerFactory nLogLoggerFactory)
     {
-      var loggerFactory = _loggerFactory ?? defaultLoggerFactory;
-      return loggerFactory.CreateLogger(type);
+      _nLogLoggerFactory = nLogLoggerFactory;
     }
-
-    public static ILogger GetLogger<T>()
+    public ILogger CreateLogger(Type type)
     {
-      return GetLogger(typeof(T));
-    }
-
-    public static void SetLoggerFactory(ILoggerFactory loggerFactory)
-    {
-      _loggerFactory = loggerFactory;
+      return new NLogLogger(_nLogLoggerFactory.CreateLogger(type));
     }
   }
 }

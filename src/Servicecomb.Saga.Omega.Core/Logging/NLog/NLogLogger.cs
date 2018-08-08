@@ -16,29 +16,40 @@
  */
 
 using System;
-using Servicecomb.Saga.Omega.Abstractions.Logging;
+using ILogger = Servicecomb.Saga.Omega.Abstractions.Logging.ILogger;
 
-namespace Servicecomb.Saga.Omega.Core.Logging
+namespace Servicecomb.Saga.Omega.Core.Logging.NLog
 {
-  public static class LogManager
+  public class NLogLogger : ILogger
   {
-    private static readonly ILoggerFactory defaultLoggerFactory = new NullLoggerFactory();
-    private static ILoggerFactory _loggerFactory;
-
-    public static ILogger GetLogger(Type type)
+    private readonly ILogger _logger;
+    public NLogLogger(ILogger logger)
     {
-      var loggerFactory = _loggerFactory ?? defaultLoggerFactory;
-      return loggerFactory.CreateLogger(type);
+      _logger = logger;
+    }
+    public void Debug(string message)
+    {
+      _logger.Debug(message);
     }
 
-    public static ILogger GetLogger<T>()
+    public void Info(string message)
     {
-      return GetLogger(typeof(T));
+      _logger.Info(message);
     }
 
-    public static void SetLoggerFactory(ILoggerFactory loggerFactory)
+    public void Warning(string message)
     {
-      _loggerFactory = loggerFactory;
+      _logger.Warning(message);
+    }
+
+    public void Error(string message, Exception exception)
+    {
+      _logger.Error(message, exception);
+    }
+
+    public void Trace(string message)
+    {
+      _logger.Trace(message);
     }
   }
 }
