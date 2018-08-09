@@ -21,18 +21,18 @@ using System.Net.Sockets;
 
 namespace Servicecomb.Saga.Omega.Core.Context
 {
-    public class ServiceConfig
+  public class ServiceConfig
+  {
+    public string ServiceName { get; set; }
+    public string InstanceId { get; set; }
+    public ServiceConfig(string serviceName)
     {
-        public string ServiceName { get; set; }
-        public string InstanceId { get; set; }
-        public ServiceConfig(string serviceName)
-        {
-            ServiceName = serviceName ?? throw new ArgumentNullException(nameof(serviceName));
-            var hostAddress = Dns.GetHostEntry(Dns.GetHostName())
-                                  .AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork) ??
-                              throw new NullReferenceException();
-            InstanceId = ServiceName + "-" + hostAddress;
-        }
-
+      ServiceName = serviceName ?? throw new ArgumentNullException(nameof(serviceName));
+      var hostAddress = Dns.GetHostEntry(Dns.GetHostName())
+                            .AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork) ??
+                        throw new NullReferenceException();
+      InstanceId = ServiceName + "-" + hostAddress;
     }
+
+  }
 }

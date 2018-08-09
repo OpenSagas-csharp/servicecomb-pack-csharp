@@ -21,11 +21,11 @@ using System;
 
 namespace Servicecomb.Saga.Omega.Core.Context
 {
-    public class UniqueIdGenerator : IIdGenerator<string>
+  public class UniqueIdGenerator : IIdGenerator<string>
+  {
+    public string NextId()
     {
-        public string NextId()
-        {
-            return Guid.NewGuid().ToString();
-        }
+      return Guid.NewGuid().ToString();
     }
+  }
 }

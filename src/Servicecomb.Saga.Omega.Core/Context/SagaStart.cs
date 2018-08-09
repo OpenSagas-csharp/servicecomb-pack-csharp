@@ -19,9 +19,9 @@ using System;
 
 namespace Servicecomb.Saga.Omega.Core.Context
 {
-    [AttributeUsage(AttributeTargets.Method)]
-    public class SagaStartAttribute: Attribute
-    {
-        public int TimeOut { get; set; } = 0;
-    }
+  [AttributeUsage(AttributeTargets.Method)]
+  public class SagaStartAttribute : Attribute
+  {
+    public int TimeOut { get; set; } = 0;
+  }
 }

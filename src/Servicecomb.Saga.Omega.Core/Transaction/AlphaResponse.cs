@@ -17,13 +17,13 @@
 
 namespace Servicecomb.Saga.Omega.Core.Transaction
 {
-    public class AlphaResponse
-    {
-        public bool Aborted { get; set; }
+  public class AlphaResponse
+  {
+    public bool Aborted { get; set; }
 
-        public AlphaResponse(bool aborted)
-        {
-            Aborted = aborted;
-        }
+    public AlphaResponse(bool aborted)
+    {
+      Aborted = aborted;
     }
+  }
 }

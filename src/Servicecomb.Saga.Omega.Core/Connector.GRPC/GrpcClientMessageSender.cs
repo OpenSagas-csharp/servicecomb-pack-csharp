@@ -78,7 +78,7 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
         Type = @event.Type.ToString(),
         Timeout = @event.Timeout,
         CompensationMethod = @event.CompensationMethod,
-        RetryMethod = @event.RetryMethod??"",
+        RetryMethod = @event.RetryMethod ?? "",
         Retries = @event.Retries,
         Payloads = payloads
       };

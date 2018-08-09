@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Servicecomb.Saga.Omega.Core.Transaction.Exception
 {
-  public class InvalidTransactionException: System.Exception
+  public class InvalidTransactionException : System.Exception
   {
     public InvalidTransactionException(string message) : base(message)
     {
