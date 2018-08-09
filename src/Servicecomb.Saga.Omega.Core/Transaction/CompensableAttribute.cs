@@ -19,23 +19,23 @@ using System;
 
 namespace Servicecomb.Saga.Omega.Core.Transaction
 {
-    [AttributeUsage(AttributeTargets.Method)]
-    public class CompensableAttribute : Attribute
+  [AttributeUsage(AttributeTargets.Method)]
+  public class CompensableAttribute : Attribute
+  {
+    public int Retries { get; set; }
+
+    public string CompensationMethod { get; set; }
+
+    public int RetryDelayInMilliseconds { get; set; }
+
+    public int Timeout { get; set; }
+
+    public CompensableAttribute(int retries, string compensationMethod, int retryDelayInMilliseconds, int timeout)
     {
-        public int Retries { get; set; }
-
-        public string CompensationMethod { get; set; }
-          
-        public int RetryDelayInMilliseconds { get; set; }
-
-        public int Timeout { get; set; }
-
-        public CompensableAttribute(int retries, string compensationMethod, int retryDelayInMilliseconds, int timeout)
-        {
-            Retries = retries;
-            CompensationMethod = compensationMethod;
-            RetryDelayInMilliseconds = retryDelayInMilliseconds;
-            Timeout = timeout;
-        }
+      Retries = retries;
+      CompensationMethod = compensationMethod;
+      RetryDelayInMilliseconds = retryDelayInMilliseconds;
+      Timeout = timeout;
     }
+  }
 }

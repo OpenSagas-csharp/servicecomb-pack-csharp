@@ -32,9 +32,9 @@ namespace Servicecomb.Saga.Omega.Core.Transaction.Impl
  *
  *                 pre                       post
  *     request --------- 2.business logic --------- response
- *                 \                          |
- * 1.TxStartedEvent \                        | 3.TxEndedEvent
- *                   \                      |
+ *                 \                           /
+ * 1.TxStartedEvent \                         / 3.TxEndedEvent
+ *                   \                       /
  *                    ----------------------
  *                            alpha
  */

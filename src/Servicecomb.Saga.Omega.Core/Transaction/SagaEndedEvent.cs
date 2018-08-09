@@ -18,7 +18,7 @@
 
 namespace Servicecomb.Saga.Omega.Core.Transaction
 {
-  public class SagaEndedEvent: TxEvent
+  public class SagaEndedEvent : TxEvent
   {
     public SagaEndedEvent(string globalTxId, string localTxId) : base(EventType.SagaEndedEvent, globalTxId, localTxId, null, "", 0, "", 0)
     {
