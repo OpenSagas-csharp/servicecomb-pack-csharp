@@ -57,19 +57,6 @@ namespace Servicecomb.Saga.Omega.Core.Transaction.Impl
         throw new InvalidTransactionException("Abort sub transaction " + abortedLocalTxId +
                                               " because global transaction " + context.GetLocalTxId() + " has already aborted.");
       }
-
-      //try
-      //{
-      //  Object result = joinPoint.proceed();
-      //  interceptor.postIntercept(parentTxId, compensationSignature);
-
-      //  return result;
-      //}
-      //catch (Throwable throwable)
-      //{
-      //  interceptor.onError(parentTxId, compensationSignature, throwable);
-      //  throw throwable;
-      //}
       throw new NotImplementedException();
     }
   }
