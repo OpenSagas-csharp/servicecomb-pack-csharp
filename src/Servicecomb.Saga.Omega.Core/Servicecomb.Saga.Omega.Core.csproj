@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <None Remove="Transaction\Impl\SagaStartAnnotationProcessor.cs~RF233ac3c5.TMP" />
+    <None Remove="Transaction\SagaStartAttributeAndAspect.cs~RF24c40f3e.TMP" />
     <None Remove="Transaction\TxCompensatedEvent.cs~RF288f6c.TMP" />
   </ItemGroup>
 
@@ -14,7 +15,7 @@
     <PackageReference Include="Grpc.Core" Version="1.14.0" />
     <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
     <PackageReference Include="MessagePack" Version="1.7.3.4" />
-    <PackageReference Include="MrAdvice" Version="2.5.24" />
+    <PackageReference Include="MethodBoundaryAspect.Fody" Version="1.0.66" />
     <PackageReference Include="Polly" Version="6.1.0" />
   </ItemGroup>
 

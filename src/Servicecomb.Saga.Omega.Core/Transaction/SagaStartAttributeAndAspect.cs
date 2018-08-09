@@ -16,7 +16,8 @@
  */
 
 
-using ArxOne.MrAdvice.Advice;
+using System;
+using MethodBoundaryAspect.Fody.Attributes;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Logging;
@@ -24,42 +25,43 @@ using Servicecomb.Saga.Omega.Core.Transaction.Impl;
 
 namespace Servicecomb.Saga.Omega.Core.Transaction
 {
-    public class SagaStartAspect:SagaStartAttribute, IMethodAdvice
+    [AttributeUsage(AttributeTargets.Method)]
+    public class SagaStartAttributeAndAspect: OnMethodBoundaryAspect
     {
-        private readonly ILogger _logger = LogManager.GetLogger(typeof(SagaStartAspect));
+        private readonly ILogger _logger = LogManager.GetLogger(typeof(SagaStartAttributeAndAspect));
 
         private readonly SagaStartAnnotationProcessor _sagaStartAnnotationProcessor;
 
         private readonly OmegaContext _omegaContext;
 
-        public SagaStartAspect(IMessageSender sender, OmegaContext context)
+        public int TimeOut { get; set; } = 0;
+
+        public SagaStartAttributeAndAspect(IMessageSender sender, OmegaContext context)
         {
             _omegaContext = context;
             _sagaStartAnnotationProcessor = new SagaStartAnnotationProcessor(context, sender);
         }
 
-        public void Advise(MethodAdviceContext context)
+
+        public override void OnEntry(MethodExecutionArgs args)
         {
             InitializeOmegaContext();
-            _sagaStartAnnotationProcessor.PreIntercept(_omegaContext.GetGlobalTxId(), context.TargetMethod.Name, TimeOut, "", 0);
-            _logger.Debug($"Initialized context {context} before execution of method {context.TargetMethod.Name}");
+            _sagaStartAnnotationProcessor.PreIntercept(_omegaContext.GetGlobalTxId(), args.Method.Name, 0, "", 0);
+            _logger.Debug($"Initialized context {_omegaContext} before execution of method {args.Method.Name}");
+        }
 
-            try
-            {
+        public override void OnExit(MethodExecutionArgs args)
+        {
+            _sagaStartAnnotationProcessor.PostIntercept(_omegaContext.GetGlobalTxId(), args.Method.Name);
+            _logger.Debug($"Transaction with context {_omegaContext} has finished.");
+            
+        }
 
-                context.Proceed();
-                _sagaStartAnnotationProcessor.PostIntercept(_omegaContext.GetGlobalTxId(), context.TargetMethod.Name);
-                _logger.Debug($"Transaction with context {context} has finished.");
-            }
-            catch (System.Exception throwable)
-            {
-                _logger.Error($"Transaction {_omegaContext.GetGlobalTxId()} failed.", throwable);
-                throw;
-            }
-            finally
-            {
-                _omegaContext.Clear();
-            }
+        public override void OnException(MethodExecutionArgs args)
+        {
+            _logger.Error($"Transaction {_omegaContext.GetGlobalTxId()} failed.", args.Exception);
+
+            _omegaContext.Clear();
         }
 
         private void InitializeOmegaContext()
