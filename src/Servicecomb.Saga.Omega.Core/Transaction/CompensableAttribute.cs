@@ -16,26 +16,65 @@
  */
 
 using System;
+using MethodBoundaryAspect.Fody.Attributes;
+using Servicecomb.Saga.Omega.Abstractions.Logging;
+using Servicecomb.Saga.Omega.Core.Context;
+using Servicecomb.Saga.Omega.Core.Logging;
+using Servicecomb.Saga.Omega.Core.Transaction.Impl;
 
 namespace Servicecomb.Saga.Omega.Core.Transaction
 {
-  [AttributeUsage(AttributeTargets.Method)]
-  public class CompensableAttribute : Attribute
-  {
-    public int Retries { get; set; }
-
-    public string CompensationMethod { get; set; }
-
-    public int RetryDelayInMilliseconds { get; set; }
-
-    public int Timeout { get; set; }
-
-    public CompensableAttribute(int retries, string compensationMethod, int retryDelayInMilliseconds, int timeout)
+    [AttributeUsage(AttributeTargets.Method)]
+    public class CompensableAttribute : OnMethodBoundaryAspect
     {
-      Retries = retries;
-      CompensationMethod = compensationMethod;
-      RetryDelayInMilliseconds = retryDelayInMilliseconds;
-      Timeout = timeout;
+        public int Retries { get; set; }
+
+        public string CompensationMethod { get; set; }
+
+        public int RetryDelayInMilliseconds { get; set; }
+
+        public int Timeout { get; set; }
+
+        private readonly ILogger _logger = LogManager.GetLogger(typeof(SagaStartAttributeAndAspect));
+
+        private readonly CompensableInterceptor _compensableInterceptor;
+
+        private readonly OmegaContext _omegaContext;
+
+        private readonly IRecoveryPolicy _recoveryPolicy;
+
+        public int TimeOut { get; set; } = 0;
+
+        public CompensableAttribute(IMessageSender sender, OmegaContext context, IRecoveryPolicy recoveryPolicy)
+        {
+            _omegaContext = context;
+            _compensableInterceptor = new CompensableInterceptor(context, sender);
+            _recoveryPolicy = recoveryPolicy;
+
+        }
+
+        public CompensableAttribute(int retries, string compensationMethod, int retryDelayInMilliseconds, int timeout)
+        {
+            Retries = retries;
+            CompensationMethod = compensationMethod;
+            RetryDelayInMilliseconds = retryDelayInMilliseconds;
+            Timeout = timeout;
+        }
+
+        public override void OnEntry(MethodExecutionArgs args)
+        {
+            _recoveryPolicy.BeforeApply(_compensableInterceptor, _omegaContext, _omegaContext.GetLocalTxId(), Retries, Timeout, args);
+        }
+
+        public override void OnExit(MethodExecutionArgs args)
+        {
+            _recoveryPolicy.AfterApply(_compensableInterceptor, _omegaContext.GetLocalTxId(), args);
+        }
+
+        public override void OnException(MethodExecutionArgs args)
+        {
+            _recoveryPolicy.ErrorApply(_compensableInterceptor, _omegaContext.GetLocalTxId(), args);
+        }
+
     }
-  }
 }

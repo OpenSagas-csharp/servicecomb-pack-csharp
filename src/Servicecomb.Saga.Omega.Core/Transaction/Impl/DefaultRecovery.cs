@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-using System;
+using MethodBoundaryAspect.Fody.Attributes;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Logging;
@@ -25,39 +25,45 @@ namespace Servicecomb.Saga.Omega.Core.Transaction.Impl
 {
 
 
-  /**
- * DefaultRecovery is used to execute business logic once.
- * The corresponding events will report to alpha server before and after the execution of business logic.
- * If there are errors while executing the business logic, a TxAbortedEvent will be reported to alpha.
- *
- *                 pre                       post
- *     request --------- 2.business logic --------- response
- *                 \                           /
- * 1.TxStartedEvent \                         / 3.TxEndedEvent
- *                   \                       /
- *                    ----------------------
- *                            alpha
- */
-  public class DefaultRecovery : IRecoveryPolicy
-  {
-    private readonly ILogger _logger = LogManager.GetLogger(typeof(DefaultRecovery));
-
-    public object Apply(CompensableInterceptor compensableInterceptor, OmegaContext context, string parentTxId, int retries,
-      CompensableAttribute compensable, string compentationMethod)
+    /**
+   * DefaultRecovery is used to execute business logic once.
+   * The corresponding events will report to alpha server before and after the execution of business logic.
+   * If there are errors while executing the business logic, a TxAbortedEvent will be reported to alpha.
+   *
+   *                 pre                       post
+   *     request --------- 2.business logic --------- response
+   *                 \                           /
+   * 1.TxStartedEvent \                         / 3.TxEndedEvent
+   *                   \                       /
+   *                    ----------------------
+   *                            alpha
+   */
+    public class DefaultRecovery : IRecoveryPolicy
     {
+        private readonly ILogger _logger = LogManager.GetLogger(typeof(DefaultRecovery));
 
-      _logger.Debug($"Intercepting compensable method {compentationMethod} with context {context}");
+        public void BeforeApply(CompensableInterceptor compensableInterceptor, OmegaContext omegaContext, string parentTxId, int retries, int timeout, MethodExecutionArgs args)
+        {
 
-      var response = compensableInterceptor.PreIntercept(parentTxId, compentationMethod, compensable.Timeout,
-        compentationMethod, retries, new Object[] { });
-      if (response.Aborted)
-      {
-        var abortedLocalTxId = context.GetLocalTxId();
-        context.SetGlobalTxId(parentTxId);
-        throw new InvalidTransactionException("Abort sub transaction " + abortedLocalTxId +
-                                              " because global transaction " + context.GetLocalTxId() + " has already aborted.");
-      }
-      throw new NotImplementedException();
+            var methodName = args.Method.Name;
+            _logger.Debug($"Intercepting compensable method {methodName} with context {omegaContext}");
+
+            var response = compensableInterceptor.PreIntercept(parentTxId, methodName, timeout,
+                "", retries, args.Arguments);
+            if (!response.Aborted) return;
+            var abortedLocalTxId = omegaContext.GetLocalTxId();
+            omegaContext.SetGlobalTxId(parentTxId);
+            throw new InvalidTransactionException($"Abort sub transaction {abortedLocalTxId}  because global transaction{omegaContext.GetLocalTxId()} has already aborted.");
+        }
+
+        public void AfterApply(CompensableInterceptor compensableInterceptor, string parentTxId, MethodExecutionArgs args)
+        {
+            compensableInterceptor.PostIntercept(parentTxId, args.Method.Name);
+        }
+
+        public void ErrorApply(CompensableInterceptor compensableInterceptor, string parentTxId, MethodExecutionArgs args)
+        {
+            compensableInterceptor.OnError(parentTxId, args.Method.Name, args.Exception);
+        }
     }
-  }
 }
