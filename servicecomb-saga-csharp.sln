@@ -13,14 +13,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicecomb.Saga.Omega.Abst
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicecomb.Saga.Omega.Core", "src\Servicecomb.Saga.Omega.Core\Servicecomb.Saga.Omega.Core.csproj", "{272729CD-3D7C-468C-A67D-4D6292BD70DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicecomb.Saga.Omega.Core.Tests", "test\Servicecomb.Saga.Omega.Core.Tests\Servicecomb.Saga.Omega.Core.Tests.csproj", "{1B309D9F-328F-4AED-B001-5985AF04DC4B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicecomb.Saga.Omega.Protocol", "src\Servicecomb.Saga.Omega.Protocol\Servicecomb.Saga.Omega.Protocol.csproj", "{B0F17F35-556A-4F1F-8D28-6CE5BC419F50}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "protos", "protos", "{4C01BFDF-305D-4B10-AE20-F322CFF603CF}"
 	ProjectSection(SolutionItems) = preProject
 		protos\GrpcTxEvent.proto = protos\GrpcTxEvent.proto
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicecomb.Saga.Omega.Core.Tests", "test\Servicecomb.Saga.Omega.Core.Tests\Servicecomb.Saga.Omega.Core.Tests.csproj", "{23D44268-2702-4F52-BA6C-15A3DE6A98EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,14 +36,14 @@ Global
 		{272729CD-3D7C-468C-A67D-4D6292BD70DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{272729CD-3D7C-468C-A67D-4D6292BD70DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{272729CD-3D7C-468C-A67D-4D6292BD70DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B309D9F-328F-4AED-B001-5985AF04DC4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B309D9F-328F-4AED-B001-5985AF04DC4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B309D9F-328F-4AED-B001-5985AF04DC4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B309D9F-328F-4AED-B001-5985AF04DC4B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B0F17F35-556A-4F1F-8D28-6CE5BC419F50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B0F17F35-556A-4F1F-8D28-6CE5BC419F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0F17F35-556A-4F1F-8D28-6CE5BC419F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0F17F35-556A-4F1F-8D28-6CE5BC419F50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23D44268-2702-4F52-BA6C-15A3DE6A98EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23D44268-2702-4F52-BA6C-15A3DE6A98EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23D44268-2702-4F52-BA6C-15A3DE6A98EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23D44268-2702-4F52-BA6C-15A3DE6A98EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,8 +51,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8FCC5C31-AF1E-4E33-A20E-1C4AFFD24A87} = {EB782C25-1BC9-4917-9D75-5B91EB523C9E}
 		{272729CD-3D7C-468C-A67D-4D6292BD70DF} = {EB782C25-1BC9-4917-9D75-5B91EB523C9E}
-		{1B309D9F-328F-4AED-B001-5985AF04DC4B} = {34D5A382-B041-48CB-8AA0-8E6E063CFB08}
 		{B0F17F35-556A-4F1F-8D28-6CE5BC419F50} = {EB782C25-1BC9-4917-9D75-5B91EB523C9E}
+		{23D44268-2702-4F52-BA6C-15A3DE6A98EB} = {34D5A382-B041-48CB-8AA0-8E6E063CFB08}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6EA49F9B-BB02-4934-85BE-1BA37B75F86C}
