@@ -23,49 +23,53 @@ using Servicecomb.Saga.Omega.Core.Logging;
 
 namespace Servicecomb.Saga.Omega.Core.Context
 {
-  public class CompensationContext
-  {
-    private readonly ILogger _logger = LogManager.GetLogger(typeof(CompensationContext));
-    private ConcurrentDictionary<string, CompensationContextInternal> _contexts =
-            new ConcurrentDictionary<string, CompensationContextInternal>();
-
-    public void AddCompensationContext(MethodInfo compensationMethod, Object target)
+    public class CompensationContext
     {
-      _contexts.TryAdd(compensationMethod.Name, new CompensationContextInternal(target, compensationMethod));
+        private readonly ILogger _logger = LogManager.GetLogger(typeof(CompensationContext));
+        private readonly ConcurrentDictionary<string, CompensationContextInternal> _contexts =
+                new ConcurrentDictionary<string, CompensationContextInternal>();
+
+        public void AddCompensationContext(MethodInfo compensationMethod, Type target)
+        {
+            _contexts.TryAdd(compensationMethod.Name, new CompensationContextInternal(target, compensationMethod));
+        }
+
+        public void Apply(string globalTxId, string localTxId, string compensationMethod, params Object[] payloads)
+        {
+            CompensationContextInternal contextInternal = null;
+            try
+            {
+
+              
+
+                _contexts.TryGetValue(compensationMethod, out contextInternal);
+                var classInstance = Activator.CreateInstance(contextInternal?.Target?? throw new InvalidOperationException(), null);
+
+                contextInternal.CompensationMethod.Invoke(classInstance, payloads);
+                _logger.Info($"Compensated transaction with global tx id [{globalTxId}], local tx id [{localTxId}]");
+            }
+            catch (TargetInvocationException ex)
+            {
+                _logger.Info(
+                  $"Compensated transaction with global tx id [{globalTxId}], local tx id .error(Pre-checking for compensation method {contextInternal?.CompensationMethod.Name} was somehow skipped, did you forget to configure compensable method checking on service startup?{ex}");
+
+            }
+        }
+
+
+        public class CompensationContextInternal
+        {
+            public Type Target;
+
+            public MethodInfo CompensationMethod;
+
+            public CompensationContextInternal(Type target, MethodInfo compensationMethod)
+            {
+                Target = target;
+                CompensationMethod = compensationMethod;
+            }
+        }
     }
-
-    public void Apply(string globalTxId, string localTxId, string compensationMethod, params Object[] payloads)
-    {
-      CompensationContextInternal contextInternal = null;
-      try
-      {
-
-        _contexts.TryGetValue(compensationMethod, out contextInternal);
-        contextInternal?.CompensationMethod.Invoke(contextInternal.Target, payloads);
-        _logger.Info($"Compensated transaction with global tx id [{globalTxId}], local tx id [{localTxId}]");
-      }
-      catch (TargetInvocationException ex)
-      {
-        _logger.Info(
-          $"Compensated transaction with global tx id [{globalTxId}], local tx id .error(Pre-checking for compensation method {contextInternal?.CompensationMethod.Name} was somehow skipped, did you forget to configure compensable method checking on service startup?{ex}");
-
-      }
-    }
-
-
-    public class CompensationContextInternal
-    {
-      public Object Target;
-
-      public MethodInfo CompensationMethod;
-
-      public CompensationContextInternal(Object target, MethodInfo compensationMethod)
-      {
-        this.Target = target;
-        this.CompensationMethod = compensationMethod;
-      }
-    }
-  }
 
 
 }
