@@ -5,3 +5,4 @@ dotnet: 2.1.302
 script:
     - dotnet restore
     - dotnet build
+    - dotnet test ./test/Servicecomb.Saga.Omega.Core.Tests/
