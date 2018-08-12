@@ -16,13 +16,14 @@ namespace Servicecomb.Saga.Omega.Core.Tests.Transaction
         [Fact]
         public void CanCompensable()
         {
-            var aTest = new Test();
+            var test = new Test();
+            test.ExcuteBusiness();
+
         }
     }
 
     public class Test
     {
-        [Compensable("DoSomething")]
         public void ExcuteBusiness()
         {
 
