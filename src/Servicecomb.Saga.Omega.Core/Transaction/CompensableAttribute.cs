@@ -53,7 +53,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
 
         }
 
-        public CompensableAttribute(int retries, string compensationMethod, int retryDelayInMilliseconds, int timeout)
+        public CompensableAttribute(string compensationMethod , int retryDelayInMilliseconds = 0, int timeout = 0, int retries = 0)
         {
             Retries = retries;
             CompensationMethod = compensationMethod;
