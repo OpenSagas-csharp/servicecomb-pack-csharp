@@ -43,8 +43,6 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
 
         private readonly IRecoveryPolicy _recoveryPolicy;
 
-        public int TimeOut { get; set; } = 0;
-
         public CompensableAttribute(IMessageSender sender, OmegaContext context, IRecoveryPolicy recoveryPolicy)
         {
             _omegaContext = context;
@@ -63,16 +61,19 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
 
         public override void OnEntry(MethodExecutionArgs args)
         {
+            _logger.Debug($"Initialized context {_omegaContext} before execution of method {args.Method.Name}");
             _recoveryPolicy.BeforeApply(_compensableInterceptor, _omegaContext, _omegaContext.GetLocalTxId(), Retries, Timeout, args);
         }
 
         public override void OnExit(MethodExecutionArgs args)
         {
             _recoveryPolicy.AfterApply(_compensableInterceptor, _omegaContext.GetLocalTxId(), args);
+            _logger.Debug($"Transaction with context {_omegaContext} has finished.");
         }
 
         public override void OnException(MethodExecutionArgs args)
         {
+            _logger.Error($"Transaction {_omegaContext.GetGlobalTxId()} failed.", args.Exception);
             _recoveryPolicy.ErrorApply(_compensableInterceptor, _omegaContext.GetLocalTxId(), args);
         }
 
