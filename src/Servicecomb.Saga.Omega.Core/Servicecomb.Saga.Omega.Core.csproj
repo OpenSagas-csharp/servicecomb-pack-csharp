@@ -16,6 +16,7 @@
     <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
     <PackageReference Include="MessagePack" Version="1.7.3.4" />
     <PackageReference Include="MethodBoundaryAspect.Fody" Version="1.0.66" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
     <PackageReference Include="Polly" Version="6.1.0" />
   </ItemGroup>
 
@@ -28,6 +29,10 @@
     <Reference Include="System.Diagnostics.DiagnosticSource">
       <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.0.0\ref\netcoreapp2.0\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Transport\HttpClient\" />
   </ItemGroup>
 
 </Project>
