@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Servicecomb.Saga.Omega.Abstractions\Servicecomb.Saga.Omega.Abstractions.csproj" />
+    <ProjectReference Include="..\Servicecomb.Saga.Omega.Core\Servicecomb.Saga.Omega.Core.csproj" />
+    <ProjectReference Include="..\Servicecomb.Saga.Omega.Protocol\Servicecomb.Saga.Omega.Protocol.csproj" />
+  </ItemGroup>
+
+</Project>

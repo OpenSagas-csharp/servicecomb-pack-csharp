@@ -16,6 +16,8 @@
  */
 
 using System;
+using System.ComponentModel.Design;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Servicecomb.Saga.Omega.Abstractions.Diagnostics;
 using Servicecomb.Saga.Omega.Core.DependencyInjection;
@@ -24,13 +26,8 @@ namespace Servicecomb.Saga.Omega.Core.Transport.HttpClient
 {
     public static class OmegaBuilderExtensions
     {
-        public static OmegaBuilder AddHttpClient(this OmegaBuilder builder)
+        public static OmegaBuilder AddHttpClient([NotNull]this OmegaBuilder builder)
         {
-            if (builder == null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
-
             builder.Services.AddSingleton<ITracingDiagnosticProcessor, HttpClientDiagnosticProcessor>();
 
             return builder;

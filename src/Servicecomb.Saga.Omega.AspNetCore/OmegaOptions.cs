@@ -15,22 +15,15 @@
  * limitations under the License.
  */
 
-using System;
-using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
-using Servicecomb.Saga.Omega.Abstractions.Diagnostics;
-using Servicecomb.Saga.Omega.Core.DependencyInjection;
+using Microsoft.Extensions.Options;
 
-namespace Servicecomb.Saga.Omega.Core.Transport.AspNetCore
+namespace Servicecomb.Saga.Omega.AspNetCore
 {
-    public static class OmegaBuilderExtensions
+    public class OmegaOptions : IOptions<OmegaOptions>
     {
-        public static OmegaBuilder AddHosting([NotNull]this OmegaBuilder builder)
-        {
-
-            builder.Services.AddSingleton<ITracingDiagnosticProcessor, HostingDiagnosticProcessor>();
-
-            return builder;
-        }
+        public string GrpcServerAddress { get; set; }
+        public string ServiceName { get; set; }
+        public string InstanceId { get; set; }
+        public OmegaOptions Value => this;
     }
 }
