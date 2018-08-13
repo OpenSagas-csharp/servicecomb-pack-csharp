@@ -16,6 +16,7 @@
  */
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Diagnostics;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
@@ -34,6 +35,7 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
     {
         public static OmegaBuilder AddHosting(this OmegaBuilder builder)
         {
+            builder.Services.AddSingleton<IHostedService, OmegaHostedService>();
             builder.Services.AddSingleton<IMessageSerializer, MessagePackMessageFormat>();
             builder.Services.AddSingleton<ITracingDiagnosticProcessor, HostingDiagnosticProcessor>();
             builder.Services.AddSingleton<ILoggerFactory, ILoggerFactory>();

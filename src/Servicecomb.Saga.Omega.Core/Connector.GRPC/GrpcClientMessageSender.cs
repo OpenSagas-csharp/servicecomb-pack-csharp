@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+using System.Threading.Tasks;
 using Google.Protobuf;
 using Grpc.Core;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
@@ -45,6 +46,7 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
 
     public void OnDisconnected()
     {
+        
       _client.OnDisconnected(_serviceConfig);
     }
 
@@ -64,7 +66,7 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
       return new AlphaResponse(grpcAck.Aborted);
     }
 
-    private GrpcTxEvent ConvertEvent(TxEvent @event)
+      private GrpcTxEvent ConvertEvent(TxEvent @event)
     {
       var payloads = ByteString.CopyFrom(_serializer.Serialize(@event.Payloads));
       return new GrpcTxEvent()

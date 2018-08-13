@@ -16,18 +16,20 @@
  */
 
 
+using System.Threading.Tasks;
+
 namespace Servicecomb.Saga.Omega.Core.Transaction
 {
-  public interface IMessageSender
-  {
-    void OnConnected();
+    public interface IMessageSender
+    {
+        void OnConnected();
 
-    void OnDisconnected();
+        void OnDisconnected();
 
-    void Close();
+        void Close();
 
-    string Target();
+        string Target();
 
-    AlphaResponse Send(TxEvent @event);
-  }
+        AlphaResponse Send(TxEvent @event);
+    }
 }
