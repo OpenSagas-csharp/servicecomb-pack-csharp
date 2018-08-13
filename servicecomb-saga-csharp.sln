@@ -24,8 +24,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicecomb.Saga.Omega.Core
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicecomb.Saga.Omega.AspNetCore", "src\Servicecomb.Saga.Omega.AspNetCore\Servicecomb.Saga.Omega.AspNetCore.csproj", "{1CA17CC9-098A-4842-B4F5-4D5883EF6A48}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Omega.Sample.Booking", "samples\Omega.Sample.Booking\Omega.Sample.Booking.csproj", "{B1E7598D-98E8-4E2F-B57B-19CD5AB27C6A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,10 +50,6 @@ Global
 		{1CA17CC9-098A-4842-B4F5-4D5883EF6A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CA17CC9-098A-4842-B4F5-4D5883EF6A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CA17CC9-098A-4842-B4F5-4D5883EF6A48}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1E7598D-98E8-4E2F-B57B-19CD5AB27C6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1E7598D-98E8-4E2F-B57B-19CD5AB27C6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1E7598D-98E8-4E2F-B57B-19CD5AB27C6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1E7598D-98E8-4E2F-B57B-19CD5AB27C6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,7 +60,6 @@ Global
 		{B0F17F35-556A-4F1F-8D28-6CE5BC419F50} = {EB782C25-1BC9-4917-9D75-5B91EB523C9E}
 		{23D44268-2702-4F52-BA6C-15A3DE6A98EB} = {34D5A382-B041-48CB-8AA0-8E6E063CFB08}
 		{1CA17CC9-098A-4842-B4F5-4D5883EF6A48} = {EB782C25-1BC9-4917-9D75-5B91EB523C9E}
-		{B1E7598D-98E8-4E2F-B57B-19CD5AB27C6A} = {0D241EBB-5A85-4FB3-AD31-A9B4A1A6357C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6EA49F9B-BB02-4934-85BE-1BA37B75F86C}
