@@ -16,6 +16,8 @@
     <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
     <PackageReference Include="MessagePack" Version="1.7.3.4" />
     <PackageReference Include="MethodBoundaryAspect.Fody" Version="1.0.66" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
     <PackageReference Include="Polly" Version="6.1.0" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.5.0" />
@@ -24,12 +26,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Servicecomb.Saga.Omega.Abstractions\Servicecomb.Saga.Omega.Abstractions.csproj" />
     <ProjectReference Include="..\Servicecomb.Saga.Omega.Protocol\Servicecomb.Saga.Omega.Protocol.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Diagnostics.DiagnosticSource">
-      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.0.0\ref\netcoreapp2.0\System.Diagnostics.DiagnosticSource.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
