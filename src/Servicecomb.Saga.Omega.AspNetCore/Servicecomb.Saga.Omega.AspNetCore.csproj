@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Servicecomb.Saga.Omega.Abstractions\Servicecomb.Saga.Omega.Abstractions.csproj" />
     <ProjectReference Include="..\Servicecomb.Saga.Omega.Core\Servicecomb.Saga.Omega.Core.csproj" />
     <ProjectReference Include="..\Servicecomb.Saga.Omega.Protocol\Servicecomb.Saga.Omega.Protocol.csproj" />
