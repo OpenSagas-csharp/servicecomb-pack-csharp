@@ -18,7 +18,9 @@
 
 using System;
 using MethodBoundaryAspect.Fody.Attributes;
+using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
+using Servicecomb.Saga.Omega.Core.Connector.GRPC;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Logging;
 using Servicecomb.Saga.Omega.Core.Transaction.Impl;
@@ -36,10 +38,11 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
 
         public int TimeOut { get; set; } = 0;
 
-        public SagaStartAttributeAndAspect(IMessageSender sender, OmegaContext context)
+        public SagaStartAttributeAndAspect()
         {
-            _omegaContext = context;
-            _sagaStartAnnotationProcessor = new SagaStartAnnotationProcessor(context, sender);
+            _omegaContext = new OmegaContext(new UniqueIdGenerator());
+
+            _sagaStartAnnotationProcessor = new SagaStartAnnotationProcessor(_omegaContext, ServiceLocator.Current.GetInstance<IMessageSender>()) ;
         }
 
 
@@ -60,7 +63,6 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
         public override void OnException(MethodExecutionArgs args)
         {
             _logger.Error($"Transaction {_omegaContext.GetGlobalTxId()} failed.", args.Exception);
-
             _omegaContext.Clear();
         }
 

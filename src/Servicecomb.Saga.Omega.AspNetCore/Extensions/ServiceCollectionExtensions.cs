@@ -18,7 +18,9 @@
 using System;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Servicecomb.Saga.Omega.Core.DependencyInjection;
+using Servicecomb.Saga.Omega.Core.Transaction;
 using Servicecomb.Saga.Omega.Core.Transport.HttpClient;
 
 namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
@@ -32,7 +34,7 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
             {
                 throw new ArgumentNullException(nameof(options));
             }
-
+            ServiceLocator.SetLocatorProvider(services.BuildServiceProvider());
             return services.Configure(options).AddOmegaCore();
         }
         private static OmegaBuilder AddOmegaCore([NotNull]this IServiceCollection services)
