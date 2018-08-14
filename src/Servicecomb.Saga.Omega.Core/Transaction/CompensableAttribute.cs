@@ -16,6 +16,8 @@
  */
 
 using System;
+using System.Linq;
+using System.Reflection;
 using MethodBoundaryAspect.Fody.Attributes;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Core.Context;
@@ -43,16 +45,16 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
 
         private readonly IRecoveryPolicy _recoveryPolicy;
 
-        public CompensableAttribute(IMessageSender sender, OmegaContext context, IRecoveryPolicy recoveryPolicy)
-        {
-            _omegaContext = context;
-            _compensableInterceptor = new CompensableInterceptor(context, sender);
-            _recoveryPolicy = recoveryPolicy;
+        private readonly CompensationContext _compensationContext;
 
-        }
 
-        public CompensableAttribute(string compensationMethod , int retryDelayInMilliseconds = 0, int timeout = 0, int retries = 0)
+        public CompensableAttribute(string compensationMethod, int retryDelayInMilliseconds = 0, int timeout = 0, int retries = 0)
         {
+            _omegaContext = new OmegaContext(new UniqueIdGenerator());
+            _compensableInterceptor = (CompensableInterceptor)ServiceLocator.Current.GetInstance(typeof(IEventAwareInterceptor));
+            _recoveryPolicy = (IRecoveryPolicy)ServiceLocator.Current.GetInstance(typeof(IRecoveryPolicy));
+            _compensationContext =
+                (CompensationContext) ServiceLocator.Current.GetInstance(typeof(CompensationContext));
             Retries = retries;
             CompensationMethod = compensationMethod;
             RetryDelayInMilliseconds = retryDelayInMilliseconds;
@@ -61,20 +63,25 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
 
         public override void OnEntry(MethodExecutionArgs args)
         {
+            var type = args.Instance.GetType();
+            _compensationContext.AddCompensationContext(type.GetMethod(CompensationMethod, BindingFlags.Instance | BindingFlags.NonPublic), type);
+  
+            object[] param = type.GetMethod(CompensationMethod, BindingFlags.Instance | BindingFlags.NonPublic)?.GetParameters().ToArray();
+
             _logger.Debug($"Initialized context {_omegaContext} before execution of method {args.Method.Name}");
-            _recoveryPolicy.BeforeApply(_compensableInterceptor, _omegaContext, _omegaContext.GetLocalTxId(), Retries, Timeout, args);
+            _recoveryPolicy.BeforeApply(_compensableInterceptor, _omegaContext, _omegaContext.GetLocalTxId(), Retries, Timeout, CompensationMethod, param);
         }
 
         public override void OnExit(MethodExecutionArgs args)
         {
-            _recoveryPolicy.AfterApply(_compensableInterceptor, _omegaContext.GetLocalTxId(), args);
+            _recoveryPolicy.AfterApply(_compensableInterceptor, _omegaContext.GetLocalTxId(), CompensationMethod);
             _logger.Debug($"Transaction with context {_omegaContext} has finished.");
         }
 
         public override void OnException(MethodExecutionArgs args)
         {
             _logger.Error($"Transaction {_omegaContext.GetGlobalTxId()} failed.", args.Exception);
-            _recoveryPolicy.ErrorApply(_compensableInterceptor, _omegaContext.GetLocalTxId(), args);
+            _recoveryPolicy.ErrorApply(_compensableInterceptor, _omegaContext.GetLocalTxId(), CompensationMethod, args.Exception);
         }
 
     }

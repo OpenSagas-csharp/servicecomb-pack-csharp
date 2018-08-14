@@ -36,17 +36,11 @@ namespace Servicecomb.Saga.Omega.AspNetCore
         private readonly IMessageSender _messageSender;
         private readonly ILogger _logger;
 
-        public OmegaHostedService(TracingDiagnosticProcessorObserver tracingDiagnosticProcessorObserver, IOptions<OmegaOptions> options, IMessageSerializer serializer, ILoggerFactory loggerFactory)
+        public OmegaHostedService(TracingDiagnosticProcessorObserver tracingDiagnosticProcessorObserver, ILoggerFactory loggerFactory, IMessageSender messageSender)
         {
             _logger = loggerFactory.CreateLogger(typeof(OmegaHostedService));
             _diagnosticObserver = tracingDiagnosticProcessorObserver;
-            _messageSender = new GrpcClientMessageSender(
-                new GrpcServiceConfig()
-                {
-                    ServiceName = options.Value.ServiceName,
-                    InstanceId = options.Value.InstanceId
-                },
-                new Channel(options.Value.GrpcServerAddress, ChannelCredentials.Insecure), serializer, options.Value.GrpcServerAddress);
+            _messageSender = messageSender;
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {

@@ -39,9 +39,6 @@ namespace Servicecomb.Saga.Omega.Core.Context
             CompensationContextInternal contextInternal = null;
             try
             {
-
-              
-
                 _contexts.TryGetValue(compensationMethod, out contextInternal);
                 var classInstance = Activator.CreateInstance(contextInternal?.Target?? throw new InvalidOperationException(), null);
 

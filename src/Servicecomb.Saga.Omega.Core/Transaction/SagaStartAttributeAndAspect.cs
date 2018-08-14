@@ -41,8 +41,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
         public SagaStartAttributeAndAspect()
         {
             _omegaContext = new OmegaContext(new UniqueIdGenerator());
-
-            _sagaStartAnnotationProcessor = new SagaStartAnnotationProcessor(_omegaContext, ServiceLocator.Current.GetInstance<IMessageSender>()) ;
+            _sagaStartAnnotationProcessor = new SagaStartAnnotationProcessor(_omegaContext, (IMessageSender)ServiceLocator.Current.GetInstance(typeof(IMessageSender))) ;
         }
 
 

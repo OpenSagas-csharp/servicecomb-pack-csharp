@@ -44,13 +44,14 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
             builder.Services.AddSingleton<IMessageSerializer, MessagePackMessageFormat>();
             builder.Services.AddSingleton<ITracingDiagnosticProcessor, HostingDiagnosticProcessor>();
             builder.Services.AddSingleton<ILoggerFactory, NullLoggerFactory>();
-            builder.Services.AddSingleton(typeof(IIdGenerator<string>),typeof(UniqueIdGenerator));
+            builder.Services.AddSingleton(typeof(IIdGenerator<string>), typeof(UniqueIdGenerator));
             builder.Services.AddSingleton<IMessageHandler, CompensationMessageHandler>();
             builder.Services.AddSingleton<IEventAwareInterceptor, SagaStartAnnotationProcessor>();
             builder.Services.AddSingleton<IEventAwareInterceptor, CompensableInterceptor>();
-            
+
             builder.Services.AddSingleton<IRecoveryPolicy, DefaultRecovery>();
             builder.Services.AddSingleton<OmegaContext>();
+            builder.Services.AddSingleton<CompensationContext>();
             builder.Services.AddSingleton<SagaStartAttributeAndAspect>();
 
             var option = new OmegaOptions();
@@ -62,7 +63,7 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
                     InstanceId = option.InstanceId,
                     ServiceName = option.ServiceName
                 },
-                new Channel(option.GrpcServerAddress,ChannelCredentials.Insecure), 
+                new Channel(option.GrpcServerAddress, ChannelCredentials.Insecure),
                 new MessagePackMessageFormat(),
                 option.GrpcServerAddress
                 ));
