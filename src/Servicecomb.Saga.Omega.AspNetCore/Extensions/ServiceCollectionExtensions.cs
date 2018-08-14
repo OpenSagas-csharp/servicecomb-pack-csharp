@@ -35,12 +35,12 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
                 throw new ArgumentNullException(nameof(options));
             }
             ServiceLocator.SetLocatorProvider(services.BuildServiceProvider());
-            return services.Configure(options).AddOmegaCore();
+            return services.Configure(options).AddOmegaCore(options,"");
         }
-        private static OmegaBuilder AddOmegaCore([NotNull]this IServiceCollection services)
+        private static OmegaBuilder AddOmegaCore([NotNull]this IServiceCollection services, Action<OmegaOptions> options,string test)
         {
             var builder = new OmegaBuilder(services);
-            builder.AddHosting().AddDiagnostics().AddHttpClient();
+            builder.AddHosting(options).AddDiagnostics().AddHttpClient();
             return builder;
         }
     }

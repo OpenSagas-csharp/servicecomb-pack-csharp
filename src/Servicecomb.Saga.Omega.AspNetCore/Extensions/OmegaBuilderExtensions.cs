@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+using System;
+using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Servicecomb.Saga.Omega.Abstractions.Context;
@@ -30,12 +32,13 @@ using Servicecomb.Saga.Omega.Core.Serializing;
 using Servicecomb.Saga.Omega.Core.Transaction;
 using Servicecomb.Saga.Omega.Core.Transaction.Impl;
 using Servicecomb.Saga.Omega.Core.Transport.AspNetCore;
+using Servicecomb.Saga.Omega.Protocol;
 
 namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
 {
     public static class OmegaBuilderExtensions
     {
-        public static OmegaBuilder AddHosting(this OmegaBuilder builder)
+        public static OmegaBuilder AddHosting(this OmegaBuilder builder, Action<OmegaOptions> options)
         {
             builder.Services.AddSingleton<IHostedService, OmegaHostedService>();
             builder.Services.AddSingleton<IMessageSerializer, MessagePackMessageFormat>();
@@ -45,10 +48,24 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
             builder.Services.AddSingleton<IMessageHandler, CompensationMessageHandler>();
             builder.Services.AddSingleton<IEventAwareInterceptor, SagaStartAnnotationProcessor>();
             builder.Services.AddSingleton<IEventAwareInterceptor, CompensableInterceptor>();
-            builder.Services.AddSingleton<IMessageSender, GrpcClientMessageSender>();
+            
             builder.Services.AddSingleton<IRecoveryPolicy, DefaultRecovery>();
             builder.Services.AddSingleton<OmegaContext>();
             builder.Services.AddSingleton<SagaStartAttributeAndAspect>();
+
+            var option = new OmegaOptions();
+            options(option);
+            builder.Services.AddSingleton<IMessageSender>(new GrpcClientMessageSender(
+                new GrpcServiceConfig
+                {
+
+                    InstanceId = option.InstanceId,
+                    ServiceName = option.ServiceName
+                },
+                new Channel(option.GrpcServerAddress,ChannelCredentials.Insecure), 
+                new MessagePackMessageFormat(),
+                option.GrpcServerAddress
+                ));
             return builder;
         }
 
