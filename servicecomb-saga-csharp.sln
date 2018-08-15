@@ -26,6 +26,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicecomb.Saga.Omega.AspN
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Omega.Sample.Booking", "samples\Omega.Sample.Booking\Omega.Sample.Booking.csproj", "{D9A91E92-BCA7-4F58-BE12-21EE191D1A8B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Omega.Sample.Car", "samples\Omega.Sample.Car\Omega.Sample.Car.csproj", "{88474D27-0611-4184-A388-B5F440C9C096}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{D9A91E92-BCA7-4F58-BE12-21EE191D1A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9A91E92-BCA7-4F58-BE12-21EE191D1A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9A91E92-BCA7-4F58-BE12-21EE191D1A8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88474D27-0611-4184-A388-B5F440C9C096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88474D27-0611-4184-A388-B5F440C9C096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88474D27-0611-4184-A388-B5F440C9C096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88474D27-0611-4184-A388-B5F440C9C096}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{23D44268-2702-4F52-BA6C-15A3DE6A98EB} = {34D5A382-B041-48CB-8AA0-8E6E063CFB08}
 		{1CA17CC9-098A-4842-B4F5-4D5883EF6A48} = {EB782C25-1BC9-4917-9D75-5B91EB523C9E}
 		{D9A91E92-BCA7-4F58-BE12-21EE191D1A8B} = {0D241EBB-5A85-4FB3-AD31-A9B4A1A6357C}
+		{88474D27-0611-4184-A388-B5F440C9C096} = {0D241EBB-5A85-4FB3-AD31-A9B4A1A6357C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6EA49F9B-BB02-4934-85BE-1BA37B75F86C}
