@@ -21,16 +21,16 @@ using Servicecomb.Saga.Omega.Abstractions.Serializing;
 
 namespace Servicecomb.Saga.Omega.Core.Serializing
 {
-  public class MessagePackMessageFormat : IMessageFormat
-  {
-    public T Deserialize<T>([NotNull]byte[] message)
+    public class MessagePackMessageFormat : IMessageFormat
     {
-      return MessagePackSerializer.Deserialize<T>(message);
-    }
+        public T Deserialize<T>([NotNull] byte[] message)
+        {
+           return MessagePackSerializer.Deserialize<T>(message);
+        }
 
-    public byte[] Serialize([NotNull]object[] objects)
-    {
-      return MessagePackSerializer.Serialize(objects);
+        public byte[] Serialize<T>([NotNull] T objects)
+        {
+           return MessagePackSerializer.Serialize(objects);
+        }
     }
-  }
 }

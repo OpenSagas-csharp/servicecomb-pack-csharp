@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Servicecomb.Saga.Omega.AspNetCore.Extensions;
 
 namespace Omega.Sample.Car
 {
@@ -24,6 +25,13 @@ namespace Omega.Sample.Car
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddOmegaCore(option =>
+            {
+                option.GrpcServerAddress = "localhost:8080";
+                option.InstanceId = "Car123";
+                option.ServiceName = "Car";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -65,11 +65,11 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
         {
             var type = args.Instance.GetType();
             _compensationContext.AddCompensationContext(type.GetMethod(CompensationMethod, BindingFlags.Instance | BindingFlags.NonPublic), type);
-  
-            object[] param = type.GetMethod(CompensationMethod, BindingFlags.Instance | BindingFlags.NonPublic)?.GetParameters().ToArray();
+
+            var param =type.GetMethod(CompensationMethod, BindingFlags.Instance | BindingFlags.NonPublic)?.GetParameters().ToArray() as  ParameterInfo[];
 
             _logger.Debug($"Initialized context {_omegaContext} before execution of method {args.Method.Name}");
-            _recoveryPolicy.BeforeApply(_compensableInterceptor, _omegaContext, _omegaContext.GetLocalTxId(), Retries, Timeout, CompensationMethod, param);
+            _recoveryPolicy.BeforeApply(_compensableInterceptor, _omegaContext, _omegaContext.GetLocalTxId(), Retries, Timeout, CompensationMethod, "");
         }
 
         public override void OnExit(MethodExecutionArgs args)

@@ -45,6 +45,7 @@ namespace Servicecomb.Saga.Omega.AspNetCore
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.Debug("Omega is connecting Alpha.");
+            DiagnosticListener.AllListeners.Subscribe(_diagnosticObserver);
             var task = new Task(RunConnect);
             _logger.Debug("Omega is Disconnected Alpha.");
             return task;

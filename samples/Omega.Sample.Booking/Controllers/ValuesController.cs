@@ -18,7 +18,7 @@ namespace Omega.Sample.Booking.Controllers
         {
             //return new string[] { "value1", "value2" };
             var httpClient = new HttpClient();
-            //httpClient.GetAsync("")
+            httpClient.GetAsync("http://localhost:5002/api/values");
             return "";
         }
 
