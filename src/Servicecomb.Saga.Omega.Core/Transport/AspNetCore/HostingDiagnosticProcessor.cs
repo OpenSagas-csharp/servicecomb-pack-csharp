@@ -21,6 +21,7 @@ using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Diagnostics;
 using Servicecomb.Saga.Omega.Core.Logging;
+using Servicecomb.Saga.Omega.Core.Transaction;
 using Servicecomb.Saga.Omega.Core.Transport.HttpClient;
 
 namespace Servicecomb.Saga.Omega.Core.Transport.AspNetCore
@@ -30,9 +31,9 @@ namespace Servicecomb.Saga.Omega.Core.Transport.AspNetCore
         private readonly ILogger _logger = LogManager.GetLogger(typeof(HttpClientDiagnosticProcessor));
         private readonly OmegaContext _omegaContext;
 
-        public HostingDiagnosticProcessor(OmegaContext omegaContext)
+        public HostingDiagnosticProcessor()
         {
-            _omegaContext = omegaContext;
+            _omegaContext = (OmegaContext)ServiceLocator.Current.GetInstance(typeof(OmegaContext));
         }
         public string ListenerName { get; } = "Microsoft.AspNetCore";
 

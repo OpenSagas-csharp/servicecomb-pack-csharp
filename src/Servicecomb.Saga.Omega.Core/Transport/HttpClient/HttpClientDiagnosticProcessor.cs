@@ -16,11 +16,13 @@
  */
 
 using System.Net.Http;
+using System.Threading;
 using Servicecomb.Saga.Omega.Abstractions.Diagnostics;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Diagnostics;
 using Servicecomb.Saga.Omega.Core.Logging;
+using Servicecomb.Saga.Omega.Core.Transaction;
 
 namespace Servicecomb.Saga.Omega.Core.Transport.HttpClient
 {
@@ -30,9 +32,9 @@ namespace Servicecomb.Saga.Omega.Core.Transport.HttpClient
         private readonly OmegaContext _omegaContext;
         public string ListenerName { get; } = "HttpHandlerDiagnosticListener";
         
-        public HttpClientDiagnosticProcessor(OmegaContext omegaContext)
+        public HttpClientDiagnosticProcessor()
         {
-            _omegaContext = omegaContext;
+            _omegaContext = (OmegaContext)ServiceLocator.Current.GetInstance(typeof(OmegaContext));
         }
 
         [DiagnosticName("System.Net.Http.Request")]

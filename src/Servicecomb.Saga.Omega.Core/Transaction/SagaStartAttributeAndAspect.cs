@@ -17,6 +17,7 @@
 
 
 using System;
+using System.Threading;
 using MethodBoundaryAspect.Fody.Attributes;
 using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
@@ -40,7 +41,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
 
         public SagaStartAttributeAndAspect()
         {
-            _omegaContext = new OmegaContext(new UniqueIdGenerator());
+            _omegaContext = (OmegaContext)ServiceLocator.Current.GetInstance(typeof(OmegaContext));
             _sagaStartAnnotationProcessor = new SagaStartAnnotationProcessor(_omegaContext, (IMessageSender)ServiceLocator.Current.GetInstance(typeof(IMessageSender))) ;
         }
 
