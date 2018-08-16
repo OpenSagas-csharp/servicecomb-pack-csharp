@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Servicecomb.Saga.Omega.Core.Transaction
+namespace Servicecomb.Saga.Omega.Core.Transaction.Extensions
 {
     public class ServiceLocator
     {
-        private ServiceProvider _currentServiceProvider;
+        private readonly ServiceProvider _currentServiceProvider;
         private static ServiceProvider _serviceProvider;
 
         public ServiceLocator(ServiceProvider currentServiceProvider)
@@ -15,13 +13,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
             _currentServiceProvider = currentServiceProvider;
         }
 
-        public static ServiceLocator Current
-        {
-            get
-            {
-                return new ServiceLocator(_serviceProvider);
-            }
-        }
+        public static ServiceLocator Current => new ServiceLocator(_serviceProvider);
 
         public static void SetLocatorProvider(ServiceProvider serviceProvider)
         {

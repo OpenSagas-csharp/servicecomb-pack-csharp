@@ -22,6 +22,7 @@ using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Diagnostics;
 using Servicecomb.Saga.Omega.Core.Logging;
 using Servicecomb.Saga.Omega.Core.Transaction;
+using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Transport.HttpClient;
 
 namespace Servicecomb.Saga.Omega.Core.Transport.AspNetCore

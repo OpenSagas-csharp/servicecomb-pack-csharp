@@ -24,6 +24,7 @@ using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Core.Connector.GRPC;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Logging;
+using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Transaction.Impl;
 
 namespace Servicecomb.Saga.Omega.Core.Transaction
