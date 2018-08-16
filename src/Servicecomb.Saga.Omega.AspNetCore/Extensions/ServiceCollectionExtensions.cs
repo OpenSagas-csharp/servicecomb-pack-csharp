@@ -18,9 +18,7 @@
 using System;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Servicecomb.Saga.Omega.Core.DependencyInjection;
-using Servicecomb.Saga.Omega.Core.Transaction;
 using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Transport.HttpClient;
 

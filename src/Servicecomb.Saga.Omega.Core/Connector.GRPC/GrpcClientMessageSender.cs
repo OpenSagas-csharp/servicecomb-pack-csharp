@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-using System.Threading.Tasks;
 using Google.Protobuf;
 using Grpc.Core;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;

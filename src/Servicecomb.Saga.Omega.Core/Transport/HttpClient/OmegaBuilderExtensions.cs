@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-using System;
-using System.ComponentModel.Design;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Servicecomb.Saga.Omega.Abstractions.Diagnostics;

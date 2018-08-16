@@ -17,11 +17,8 @@
 
 
 using System;
-using System.Threading;
 using MethodBoundaryAspect.Fody.Attributes;
-using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
-using Servicecomb.Saga.Omega.Core.Connector.GRPC;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Logging;
 using Servicecomb.Saga.Omega.Core.Transaction.Extensions;

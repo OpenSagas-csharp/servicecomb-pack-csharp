@@ -18,15 +18,10 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Grpc.Core;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
-using Servicecomb.Saga.Omega.Abstractions.Transaction;
-using Servicecomb.Saga.Omega.Core.Connector.GRPC;
 using Servicecomb.Saga.Omega.Core.Diagnostics;
 using Servicecomb.Saga.Omega.Core.Transaction;
-using Servicecomb.Saga.Omega.Protocol;
 
 namespace Servicecomb.Saga.Omega.AspNetCore
 {
