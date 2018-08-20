@@ -60,8 +60,8 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
             _compensableInterceptor = (CompensableInterceptor)ServiceLocator.Current.GetInstance(typeof(IEventAwareInterceptor));
             _recoveryPolicy = (IRecoveryPolicy)ServiceLocator.Current.GetInstance(typeof(IRecoveryPolicy));
             _compensationContext =
-                (CompensationContext) ServiceLocator.Current.GetInstance(typeof(CompensationContext));
-            _messageFormat= (IMessageSerializer)ServiceLocator.Current.GetInstance(typeof(IMessageSerializer));
+                (CompensationContext)ServiceLocator.Current.GetInstance(typeof(CompensationContext));
+            _messageFormat = (IMessageSerializer)ServiceLocator.Current.GetInstance(typeof(IMessageSerializer));
             Retries = retries;
             CompensationMethod = compensationMethod;
             RetryDelayInMilliseconds = retryDelayInMilliseconds;
@@ -75,12 +75,6 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
             _compensationContext.AddCompensationContext(type.GetMethod(CompensationMethod, BindingFlags.Instance | BindingFlags.NonPublic), type);
 
             _omegaContext.NewLocalTxId();
-            //var param =type.GetMethod(CompensationMethod, BindingFlags.Instance | BindingFlags.NonPublic)?.GetParameters();
-            //List<Test> tests = new List<Test>();
-            //for (int i = 0; i < param.Length; i++)
-            //{
-            //    tests.Add(new Test(){Index = i,Value = param[i].DefaultValue});
-            //}
             var paramBytes = _messageFormat.Serialize(args.Arguments);
             _logger.Debug($"Initialized context {_omegaContext} before execution of method {args.Method.Name}");
             _recoveryPolicy.BeforeApply(_compensableInterceptor, _omegaContext, _parenttxId, Retries, Timeout, CompensationMethod, paramBytes);

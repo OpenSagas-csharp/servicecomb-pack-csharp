@@ -40,7 +40,6 @@ namespace Servicecomb.Saga.Omega.AspNetCore
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.Debug("Omega is connecting Alpha.");
-            //DiagnosticListener.AllListeners.Subscribe(_diagnosticObserver);
             var task = new Task(RunConnect);
             task.Start();
             _logger.Debug("Omega is Disconnected Alpha.");
@@ -59,7 +58,6 @@ namespace Servicecomb.Saga.Omega.AspNetCore
 
         private void RunConnect()
         {
-
             DiagnosticListener.AllListeners.Subscribe(_diagnosticObserver);
             _messageSender.OnConnected();
         }
