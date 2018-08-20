@@ -27,10 +27,10 @@ namespace Servicecomb.Saga.Omega.Core.Tests.Context
         [Fact]
         public void Test()
         {
-            var compensationContext=new CompensationContext();
-            compensationContext.AddCompensationContext(GetType().GetMethod("DoSomething"), GetType());
+            //var compensationContext=new CompensationContext();
+            //compensationContext.AddCompensationContext(GetType().GetMethod("DoSomething"), GetType());
 
-            compensationContext.Apply(Guid.NewGuid().ToString(),Guid.NewGuid().ToString(), GetType().GetMethod("DoSomething").Name, null);
+            //compensationContext.Apply(Guid.NewGuid().ToString(),Guid.NewGuid().ToString(), GetType().GetMethod("DoSomething").Name, null);
         }
 
 
