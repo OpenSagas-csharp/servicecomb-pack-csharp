@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MethodBoundaryAspect.Fody" Version="1.0.66" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Servicecomb.Saga.Omega.AspNetCore\Servicecomb.Saga.Omega.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\src\Servicecomb.Saga.Omega.Core\Servicecomb.Saga.Omega.Core.csproj" />
+  </ItemGroup>
+
+</Project>

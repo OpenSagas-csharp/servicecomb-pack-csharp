@@ -17,7 +17,9 @@
 
 using JetBrains.Annotations;
 using MessagePack;
+using MessagePack.Resolvers;
 using Servicecomb.Saga.Omega.Abstractions.Serializing;
+using System.Linq;
 
 namespace Servicecomb.Saga.Omega.Core.Serializing
 {
@@ -25,12 +27,13 @@ namespace Servicecomb.Saga.Omega.Core.Serializing
     {
         public T Deserialize<T>([NotNull] byte[] message)
         {
+
            return MessagePackSerializer.Deserialize<T>(message);
         }
 
         public byte[] Serialize<T>([NotNull] T objects)
         {
-           return MessagePackSerializer.Serialize(objects);
+           return MessagePackSerializer.Serialize(objects, ContractlessStandardResolver.Instance);
         }
     }
 }

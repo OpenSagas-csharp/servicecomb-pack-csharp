@@ -19,7 +19,9 @@ using System;
 using System.Collections.Concurrent;
 using System.Reflection;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
+using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Logging;
+using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
 
 namespace Servicecomb.Saga.Omega.Core.Context
 {
@@ -34,16 +36,19 @@ namespace Servicecomb.Saga.Omega.Core.Context
             _contexts.TryAdd(compensationMethod.Name, new CompensationContextInternal(target, compensationMethod));
         }
 
-        public void Apply(string globalTxId, string localTxId, string compensationMethod, params Object[] payloads)
+        public void Apply(string globalTxId, string localTxId, string compensationMethod, params byte[] payloads)
         {
             CompensationContextInternal contextInternal = null;
             try
             {
                 _contexts.TryGetValue(compensationMethod, out contextInternal);
-                var classInstance = Activator.CreateInstance(contextInternal?.Target?? throw new InvalidOperationException(), null);
-
-                contextInternal.CompensationMethod.Invoke(classInstance, payloads);
+                var classInstance = Activator.CreateInstance(contextInternal?.Target ?? throw new InvalidOperationException(), null);
+                var messageFormat = (IMessageSerializer)ServiceLocator.Current.GetInstance(typeof(IMessageSerializer));
+                var result = messageFormat.Deserialize<dynamic>(payloads);
+                contextInternal.CompensationMethod.Invoke(classInstance, null);
                 _logger.Info($"Compensated transaction with global tx id [{globalTxId}], local tx id [{localTxId}]");
+
+
             }
             catch (TargetInvocationException ex)
             {

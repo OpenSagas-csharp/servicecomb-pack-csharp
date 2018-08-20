@@ -9,19 +9,19 @@ namespace Omega.Sample.Car.Controllers
 {
     public class CarBookingService
     {
-        private ConcurrentDictionary<int, CarBooking> bookings = new ConcurrentDictionary<int, CarBooking>();
+        private readonly ConcurrentDictionary<int, CarBooking> _bookings = new ConcurrentDictionary<int, CarBooking>();
 
 
         [Compensable("Cancel")]
         public void Order(CarBooking carBooking)
         {
             carBooking.Confirm();
-            bookings.TryAdd(carBooking.Id, carBooking);
+            _bookings.TryAdd(carBooking.Id, carBooking);
         }
 
         void Cancel(CarBooking booking)
         {
-            bookings.TryGetValue(booking.Id, out var carBooking);
+            _bookings.TryGetValue(booking.Id, out var carBooking);
             carBooking?.Cancel();
         }
     }

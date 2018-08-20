@@ -48,7 +48,6 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
             builder.Services.AddSingleton<IMessageHandler, CompensationMessageHandler>();
             builder.Services.AddSingleton<IEventAwareInterceptor, SagaStartAnnotationProcessor>();
             builder.Services.AddSingleton<IEventAwareInterceptor, CompensableInterceptor>();
-
             builder.Services.AddSingleton<IRecoveryPolicy, DefaultRecovery>();
             builder.Services.AddSingleton<OmegaContext>();
             builder.Services.AddSingleton<CompensationContext>();

@@ -46,7 +46,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction.Impl
             _logger.Debug($"Intercepting compensable method {methodName} with context {omegaContext}");
 
             var response = compensableInterceptor.PreIntercept(parentTxId, methodName, timeout,
-                "", retries, "");
+                "", retries, parameters);
             if (!response.Aborted) return;
             var abortedLocalTxId = omegaContext.GetLocalTxId();
             omegaContext.SetGlobalTxId(parentTxId);

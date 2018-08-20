@@ -16,10 +16,12 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using MethodBoundaryAspect.Fody.Attributes;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
+using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Logging;
 using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
@@ -47,6 +49,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
         private readonly IRecoveryPolicy _recoveryPolicy;
 
         private readonly CompensationContext _compensationContext;
+        private readonly IMessageSerializer _messageFormat;
 
         private readonly string _parenttxId;
 
@@ -58,6 +61,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
             _recoveryPolicy = (IRecoveryPolicy)ServiceLocator.Current.GetInstance(typeof(IRecoveryPolicy));
             _compensationContext =
                 (CompensationContext) ServiceLocator.Current.GetInstance(typeof(CompensationContext));
+            _messageFormat= (IMessageSerializer)ServiceLocator.Current.GetInstance(typeof(IMessageSerializer));
             Retries = retries;
             CompensationMethod = compensationMethod;
             RetryDelayInMilliseconds = retryDelayInMilliseconds;
@@ -71,10 +75,15 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
             _compensationContext.AddCompensationContext(type.GetMethod(CompensationMethod, BindingFlags.Instance | BindingFlags.NonPublic), type);
 
             _omegaContext.NewLocalTxId();
-            var param =type.GetMethod(CompensationMethod, BindingFlags.Instance | BindingFlags.NonPublic)?.GetParameters().ToArray();
-
+            //var param =type.GetMethod(CompensationMethod, BindingFlags.Instance | BindingFlags.NonPublic)?.GetParameters();
+            //List<Test> tests = new List<Test>();
+            //for (int i = 0; i < param.Length; i++)
+            //{
+            //    tests.Add(new Test(){Index = i,Value = param[i].DefaultValue});
+            //}
+            var paramBytes = _messageFormat.Serialize(args.Arguments);
             _logger.Debug($"Initialized context {_omegaContext} before execution of method {args.Method.Name}");
-            _recoveryPolicy.BeforeApply(_compensableInterceptor, _omegaContext, _parenttxId, Retries, Timeout, CompensationMethod, "");
+            _recoveryPolicy.BeforeApply(_compensableInterceptor, _omegaContext, _parenttxId, Retries, Timeout, CompensationMethod, paramBytes);
         }
 
         public override void OnExit(MethodExecutionArgs args)

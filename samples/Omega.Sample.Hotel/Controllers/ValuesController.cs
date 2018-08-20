@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Servicecomb.Saga.Omega.Core.Transaction;
 
-namespace Omega.Sample.Booking.Controllers
+namespace Omega.Sample.Hotel.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
         // GET api/values
         [HttpGet]
-        [SagaStartAttributeAndAspect]
-        public String Get()
+        public IEnumerable<string> Get()
         {
-            //return new string[] { "value1", "value2" };
-            var httpClient = new HttpClient();
-            httpClient.GetAsync("http://localhost:5002/api/values");
-            httpClient.GetAsync("http://localhost:5003/api/values");
-            return "";
+            HotelBookingService bookingService =new HotelBookingService();
+            HotelBooking hotelBooking = new HotelBooking()
+            {
+                Id = 1,
+                Amount = 3,
+                Name = "test"
+            };
+            bookingService.Order(hotelBooking);
+            return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5

@@ -15,74 +15,83 @@
  * limitations under the License.
  */
 
+using System.Threading;
 using Google.Protobuf;
 using Grpc.Core;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Transaction;
+using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Protocol;
 
 namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
 {
-  public class GrpcClientMessageSender : IMessageSender
-  {
-    private readonly GrpcServiceConfig _serviceConfig;
-    private readonly TxEventService.TxEventServiceClient _client;
-    private readonly IMessageSerializer _serializer;
-    private readonly string _target;
-
-    public GrpcClientMessageSender(GrpcServiceConfig serviceConfig, Channel channel, IMessageSerializer serializer, string address)
+    public class GrpcClientMessageSender : IMessageSender
     {
-      _serviceConfig = serviceConfig;
-      _client = new TxEventService.TxEventServiceClient(channel);
-      _serializer = serializer;
-      _target = address;
-    }
+        private readonly GrpcServiceConfig _serviceConfig;
+        private readonly TxEventService.TxEventServiceClient _client;
+        private readonly IMessageSerializer _serializer;
+        private readonly string _target;
+        private  IMessageHandler _messageHandler => (IMessageHandler)ServiceLocator.Current.GetInstance(typeof(IMessageHandler));
 
-    public void OnConnected()
-    {
-      _client.OnConnected(_serviceConfig);
-    }
+        public GrpcClientMessageSender(GrpcServiceConfig serviceConfig, Channel channel, IMessageSerializer serializer, string address)
+        {
+            _serviceConfig = serviceConfig;
+            _client = new TxEventService.TxEventServiceClient(channel);
+            _serializer = serializer;
+            _target = address;
+            var invoker = new DefaultCallInvoker(channel);
 
-    public void OnDisconnected()
-    {
-        
-      _client.OnDisconnected(_serviceConfig);
-    }
+        }
 
-    public void Close()
-    {
-      // just do nothing here
-    }
+        public async  void OnConnected()
+        {
+            var command = _client.OnConnected(_serviceConfig);
+            while (await command.ResponseStream.MoveNext(CancellationToken.None))
+            {
+                _messageHandler.OnReceive(command.ResponseStream.Current.GlobalTxId, command.ResponseStream.Current.LocalTxId, command.ResponseStream.Current.ParentTxId, command.ResponseStream.Current.CompensationMethod, command.ResponseStream.Current.Payloads.ToByteArray());
+            }
 
-    public string Target()
-    {
-      return _target;
-    }
+        }
 
-    public AlphaResponse Send(TxEvent @event)
-    {
-      var grpcAck = _client.OnTxEvent(ConvertEvent(@event));
-      return new AlphaResponse(grpcAck.Aborted);
-    }
+        public void OnDisconnected()
+        {
+            _client.OnDisconnected(_serviceConfig);
+        }
 
-      private GrpcTxEvent ConvertEvent(TxEvent @event)
-    {
-      var payloads = ByteString.CopyFrom(_serializer.Serialize(@event.Payloads));
-      return new GrpcTxEvent()
-      {
-        ServiceName = _serviceConfig.ServiceName,
-        InstanceId = _serviceConfig.InstanceId,
-        Timestamp = @event.Timestamp,
-        GlobalTxId = @event.GlobalTxId,
-        LocalTxId = @event.LocalTxId,
-        ParentTxId = @event.ParentTxId ?? "",
-        Type = @event.Type.ToString(),
-        Timeout = @event.Timeout,
-        CompensationMethod = @event.CompensationMethod,
-        RetryMethod = @event.RetryMethod ?? "",
-        Retries = @event.Retries,
-        Payloads = payloads
-      };
+        public void Close()
+        {
+            // just do nothing here
+        }
+
+        public string Target()
+        {
+            return _target;
+        }
+
+        public AlphaResponse Send(TxEvent @event)
+        {
+            var grpcAck = _client.OnTxEvent(ConvertEvent(@event));
+            return new AlphaResponse(grpcAck.Aborted);
+        }
+
+        private GrpcTxEvent ConvertEvent(TxEvent @event)
+        {
+            var payloads = ByteString.CopyFrom(_serializer.Serialize(@event.Payloads));
+            return new GrpcTxEvent()
+            {
+                ServiceName = _serviceConfig.ServiceName,
+                InstanceId = _serviceConfig.InstanceId,
+                Timestamp = @event.Timestamp,
+                GlobalTxId = @event.GlobalTxId,
+                LocalTxId = @event.LocalTxId,
+                ParentTxId = @event.ParentTxId ?? "",
+                Type = @event.Type.ToString(),
+                Timeout = @event.Timeout,
+                CompensationMethod = @event.CompensationMethod,
+                RetryMethod = @event.RetryMethod ?? "",
+                Retries = @event.Retries,
+                Payloads = payloads
+            };
+        }
     }
-  }
 }
