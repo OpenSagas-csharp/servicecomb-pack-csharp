@@ -48,7 +48,7 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
             var command = _client.OnConnected(_serviceConfig);
             while (await command.ResponseStream.MoveNext(CancellationToken.None))
             {
-                var result = command.ResponseStream.Current.Payloads.ToStringUtf8();
+
                 _messageHandler.OnReceive(command.ResponseStream.Current.GlobalTxId, command.ResponseStream.Current.LocalTxId, command.ResponseStream.Current.ParentTxId, command.ResponseStream.Current.CompensationMethod, command.ResponseStream.Current.Payloads.ToByteArray()) ;
             }
 

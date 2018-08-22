@@ -17,15 +17,11 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using Google.Protobuf;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Logging;
-using Servicecomb.Saga.Omega.Core.Transaction;
 using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
 
 namespace Servicecomb.Saga.Omega.Core.Context
