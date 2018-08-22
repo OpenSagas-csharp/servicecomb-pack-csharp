@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-using System.Linq;
 using System.Text;
 using System.Threading;
 using Google.Protobuf;
@@ -79,12 +78,7 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
         private GrpcTxEvent ConvertEvent(TxEvent @event)
         {
             
-            var payloads = ByteString.CopyFrom(_serializer.Serialize(@event.Payloads),Encoding.UTF8);
-            if (payloads.ToStringUtf8().Length>10)
-            {
-                //var test = _serializer.Deserialize<object>(_serializer.Serialize(@event.Payloads));
-            }
-            
+            var payloads = ByteString.CopyFrom(_serializer.Serialize(@event.Payloads),Encoding.UTF8);           
             return new GrpcTxEvent()
             {
                 ServiceName = _serviceConfig.ServiceName,

@@ -49,16 +49,12 @@ namespace Servicecomb.Saga.Omega.Core.Context
             {
                 _contexts.TryGetValue(compensationMethod, out contextInternal);
                 var classInstance = Activator.CreateInstance(contextInternal?.Target ?? throw new InvalidOperationException(), null);
+
+
                 var messageFormat = (IMessageSerializer)ServiceLocator.Current.GetInstance(typeof(IMessageSerializer));
                 var parameterInfos = contextInternal.CompensationMethod.GetParameters();
 
-                //foreach (var aa in aaa)
-                //{
-                //    //Activator.CreateInstance(aa.ParameterType);
-                //    var aaa = messageFormat.Deserialize<T>(Encoding.UTF8.GetString(payloads));
-                //}
                 var result =messageFormat.Deserialize(Encoding.UTF8.GetString(payloads), typeof(object[])) as object[] ;
-
                 var objects = new object[] { };
                 
                 if (result != null)
@@ -73,8 +69,6 @@ namespace Servicecomb.Saga.Omega.Core.Context
                         objects[index] = typeResult;
                     }
                 }
-                    
-
                 contextInternal.CompensationMethod.Invoke(classInstance, objects);
                 _logger.Info($"Compensated transaction with global tx id [{globalTxId}], local tx id [{localTxId}]");
 

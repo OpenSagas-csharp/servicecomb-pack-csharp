@@ -77,8 +77,6 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
             _omegaContext.NewLocalTxId();
             var paramBytes = _messageFormat.Serialize(args.Arguments);
         
-            //var aa= System.Text.Encoding.UTF8.GetString(paramBytes);
-            //var result = _messageFormat.Deserialize<Test>(paramBytes);
             _logger.Debug($"Initialized context {_omegaContext} before execution of method {args.Method.Name}");
             _recoveryPolicy.BeforeApply(_compensableInterceptor, _omegaContext, _parenttxId, Retries, Timeout, CompensationMethod, paramBytes);
         }

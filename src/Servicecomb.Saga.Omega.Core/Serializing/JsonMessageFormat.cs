@@ -17,10 +17,7 @@
 
 using System;
 using JetBrains.Annotations;
-using MessagePack;
-using MessagePack.Resolvers;
 using Servicecomb.Saga.Omega.Abstractions.Serializing;
-using System.Linq;
 using Newtonsoft.Json;
 
 namespace Servicecomb.Saga.Omega.Core.Serializing
