@@ -15,25 +15,28 @@
  * limitations under the License.
  */
 
+using System;
 using JetBrains.Annotations;
 using MessagePack;
 using MessagePack.Resolvers;
 using Servicecomb.Saga.Omega.Abstractions.Serializing;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Servicecomb.Saga.Omega.Core.Serializing
 {
-    public class MessagePackMessageFormat : IMessageFormat
+    public class JsonMessageFormat : IMessageFormat
     {
-        public T Deserialize<T>([NotNull] byte[] message)
+        public object Deserialize([NotNull] string message,Type type)
         {
 
-           return MessagePackSerializer.Deserialize<T>(message);
+
+            return  JsonConvert.DeserializeObject(message, type);
         }
 
-        public byte[] Serialize<T>([NotNull] T objects)
+        public string Serialize<T>([NotNull] T objects)
         {
-           return MessagePackSerializer.Serialize(objects, ContractlessStandardResolver.Instance);
+            return JsonConvert.SerializeObject(objects);
         }
     }
 }

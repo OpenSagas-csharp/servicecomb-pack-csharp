@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+using System.Linq;
+using System.Text;
 using System.Threading;
 using Google.Protobuf;
 using Grpc.Core;
@@ -39,7 +41,6 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
             _client = new TxEventService.TxEventServiceClient(channel);
             _serializer = serializer;
             _target = address;
-            var invoker = new DefaultCallInvoker(channel);
 
         }
 
@@ -48,7 +49,8 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
             var command = _client.OnConnected(_serviceConfig);
             while (await command.ResponseStream.MoveNext(CancellationToken.None))
             {
-                _messageHandler.OnReceive(command.ResponseStream.Current.GlobalTxId, command.ResponseStream.Current.LocalTxId, command.ResponseStream.Current.ParentTxId, command.ResponseStream.Current.CompensationMethod, command.ResponseStream.Current.Payloads.ToByteArray());
+                var result = command.ResponseStream.Current.Payloads.ToStringUtf8();
+                _messageHandler.OnReceive(command.ResponseStream.Current.GlobalTxId, command.ResponseStream.Current.LocalTxId, command.ResponseStream.Current.ParentTxId, command.ResponseStream.Current.CompensationMethod, command.ResponseStream.Current.Payloads.ToByteArray()) ;
             }
 
         }
@@ -76,7 +78,13 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
 
         private GrpcTxEvent ConvertEvent(TxEvent @event)
         {
-            var payloads = ByteString.CopyFrom(_serializer.Serialize(@event.Payloads));
+            
+            var payloads = ByteString.CopyFrom(_serializer.Serialize(@event.Payloads),Encoding.UTF8);
+            if (payloads.ToStringUtf8().Length>10)
+            {
+                //var test = _serializer.Deserialize<object>(_serializer.Serialize(@event.Payloads));
+            }
+            
             return new GrpcTxEvent()
             {
                 ServiceName = _serviceConfig.ServiceName,

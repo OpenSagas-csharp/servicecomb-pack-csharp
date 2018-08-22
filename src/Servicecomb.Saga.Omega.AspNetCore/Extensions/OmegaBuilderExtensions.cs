@@ -41,7 +41,7 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
         public static OmegaBuilder AddHosting(this OmegaBuilder builder, Action<OmegaOptions> options)
         {
             builder.Services.AddSingleton<IHostedService, OmegaHostedService>();
-            builder.Services.AddSingleton<IMessageSerializer, MessagePackMessageFormat>();
+            builder.Services.AddSingleton<IMessageSerializer, JsonMessageFormat>();
             builder.Services.AddSingleton<ITracingDiagnosticProcessor, HostingDiagnosticProcessor>();
             builder.Services.AddSingleton<ILoggerFactory, NullLoggerFactory>();
             builder.Services.AddSingleton(typeof(IIdGenerator<string>), typeof(UniqueIdGenerator));
@@ -63,7 +63,7 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
                     ServiceName = option.ServiceName
                 },
                 new Channel(option.GrpcServerAddress, ChannelCredentials.Insecure),
-                new MessagePackMessageFormat(),
+                new JsonMessageFormat(),
                 option.GrpcServerAddress
                 ));
             return builder;

@@ -17,10 +17,15 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using Google.Protobuf;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Logging;
+using Servicecomb.Saga.Omega.Core.Transaction;
 using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
 
 namespace Servicecomb.Saga.Omega.Core.Context
@@ -39,13 +44,38 @@ namespace Servicecomb.Saga.Omega.Core.Context
         public void Apply(string globalTxId, string localTxId, string compensationMethod, params byte[] payloads)
         {
             CompensationContextInternal contextInternal = null;
+           
             try
             {
                 _contexts.TryGetValue(compensationMethod, out contextInternal);
                 var classInstance = Activator.CreateInstance(contextInternal?.Target ?? throw new InvalidOperationException(), null);
                 var messageFormat = (IMessageSerializer)ServiceLocator.Current.GetInstance(typeof(IMessageSerializer));
-                var result = messageFormat.Deserialize<dynamic>(payloads);
-                contextInternal.CompensationMethod.Invoke(classInstance, null);
+                var parameterInfos = contextInternal.CompensationMethod.GetParameters();
+
+                //foreach (var aa in aaa)
+                //{
+                //    //Activator.CreateInstance(aa.ParameterType);
+                //    var aaa = messageFormat.Deserialize<T>(Encoding.UTF8.GetString(payloads));
+                //}
+                var result =messageFormat.Deserialize(Encoding.UTF8.GetString(payloads), typeof(object[])) as object[] ;
+
+                var objects = new object[] { };
+                
+                if (result != null)
+                {
+                    objects = new object[result.Length];
+                    for (var index = 0; index < result.Length; index++)
+                    {
+                        var t = result[index];
+                        var tResult = messageFormat.Serialize(t)
+                            .Substring(2, messageFormat.Serialize(result[0]).Length - 4).Replace(@"\", "");
+                        var typeResult = messageFormat.Deserialize(tResult, parameterInfos[0].ParameterType);
+                        objects[index] = typeResult;
+                    }
+                }
+                    
+
+                contextInternal.CompensationMethod.Invoke(classInstance, objects);
                 _logger.Info($"Compensated transaction with global tx id [{globalTxId}], local tx id [{localTxId}]");
 
 

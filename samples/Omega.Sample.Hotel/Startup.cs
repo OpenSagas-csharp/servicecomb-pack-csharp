@@ -27,7 +27,7 @@ namespace Omega.Sample.Hotel
             services.AddMvc();
             services.AddOmegaCore(option =>
             {
-                option.GrpcServerAddress = "localhost:8080";
+                option.GrpcServerAddress = "192.168.198.169:8080";
                 option.InstanceId = "Hotel123";
                 option.ServiceName = "Hotel";
             });

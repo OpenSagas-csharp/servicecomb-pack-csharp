@@ -42,7 +42,7 @@ namespace Servicecomb.Saga.Omega.Core.Tests.Connector.GRPC
             Assert.Equal("localhost:8080", channel.Target);
 
 
-            var messageSerializer = new MessagePackMessageFormat();
+            var messageSerializer = new JsonMessageFormat();
             
             var grpcClientMessageSender=new GrpcClientMessageSender(grpcServiceConfig,channel,messageSerializer,channel.Target);
         

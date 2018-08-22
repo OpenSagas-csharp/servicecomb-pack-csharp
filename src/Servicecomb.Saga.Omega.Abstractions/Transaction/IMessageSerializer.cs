@@ -19,9 +19,9 @@ using System;
 
 namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public interface IMessageSerializer
-  {
-    byte[] Serialize<T>(T objects);
-    T Deserialize<T>(byte[] message);
-  }
+    public interface IMessageSerializer
+    {
+        string Serialize<T>(T objects);
+        object Deserialize(string message,Type type);
+    }
 }
