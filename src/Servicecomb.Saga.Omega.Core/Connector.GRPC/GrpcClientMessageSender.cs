@@ -23,6 +23,7 @@ using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Transaction;
 using Servicecomb.Saga.Omega.Protocol;
+using ServiceLocator = Servicecomb.Saga.Omega.Core.Transaction.Exception.ServiceLocator;
 
 namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
 {

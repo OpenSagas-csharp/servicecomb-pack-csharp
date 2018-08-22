@@ -18,7 +18,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions
+namespace Servicecomb.Saga.Omega.Core.Transaction.Exception
 {
     public class ServiceLocator
     {

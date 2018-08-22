@@ -24,6 +24,7 @@ using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Logging;
 using Servicecomb.Saga.Omega.Core.Transaction.Impl;
+using ServiceLocator = Servicecomb.Saga.Omega.Core.Transaction.Exception.ServiceLocator;
 
 namespace Servicecomb.Saga.Omega.Core.Transaction
 {
