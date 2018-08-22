@@ -14,10 +14,10 @@ namespace Omega.Sample.Hotel.Controllers
             HotelBooking hotelBooking = new HotelBooking()
             {
                 Id = 1,
-                Amount = 3,
+                Amount = 1,
                 Name = "test"
             };
-            bookingService.Order(hotelBooking);
+           bookingService.Order(hotelBooking);
             return new string[] { "value1", "value2" };
         }
 

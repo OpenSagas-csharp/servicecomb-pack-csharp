@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 using Servicecomb.Saga.Omega.Core.Transaction;
 
@@ -9,13 +10,15 @@ namespace Omega.Sample.Booking.Controllers
     public class ValuesController : Controller
     {
         // GET api/values
-        [HttpGet, SagaStartAttribute]
+        [HttpGet, SagaStart]
         public String Get()
         {
             //return new string[] { "value1", "value2" };
             var httpClient = new HttpClient();
             httpClient.GetAsync("http://localhost:5002/api/values");
-            httpClient.GetAsync("http://localhost:5003/api/values");
+          var content=  httpClient.GetAsync("http://localhost:5003/api/values");
+            Thread.Sleep(5000);
+            throw  new NullReferenceException();
             return "";
         }
 

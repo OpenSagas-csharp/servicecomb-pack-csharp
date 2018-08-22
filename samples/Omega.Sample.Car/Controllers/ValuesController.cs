@@ -14,7 +14,7 @@ namespace Omega.Sample.Car.Controllers
             var carbook = new CarBooking()
             {
                 Id = 1,
-                Amount = 100,
+                Amount = 1,
                 Name = "WithLin"
             };
             carBookingService.Order(carbook);
