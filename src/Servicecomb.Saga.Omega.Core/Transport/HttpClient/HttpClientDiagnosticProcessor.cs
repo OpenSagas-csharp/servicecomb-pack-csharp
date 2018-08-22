@@ -18,10 +18,10 @@
 using System.Net.Http;
 using Servicecomb.Saga.Omega.Abstractions.Diagnostics;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
+using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Diagnostics;
 using Servicecomb.Saga.Omega.Core.Logging;
-using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
 
 namespace Servicecomb.Saga.Omega.Core.Transport.HttpClient
 {

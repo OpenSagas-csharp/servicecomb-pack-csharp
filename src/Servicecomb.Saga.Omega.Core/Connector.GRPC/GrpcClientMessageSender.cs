@@ -20,8 +20,8 @@ using System.Threading;
 using Google.Protobuf;
 using Grpc.Core;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
+using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Transaction;
-using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Protocol;
 
 namespace Servicecomb.Saga.Omega.Core.Connector.GRPC

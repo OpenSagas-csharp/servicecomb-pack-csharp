@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-using System;
 
-namespace Servicecomb.Saga.Omega.Core.Transaction.Extensions
+namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public static class DateTimeExtensions
-  {
-    private static readonly DateTime Jan1St1970 = new DateTime
-(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-    public static long CurrentTimeMillis()
+    public interface IMessageSender
     {
-      return (long)(DateTime.UtcNow - Jan1St1970).TotalMilliseconds;
+        void OnConnected();
+
+        void OnDisconnected();
+
+        void Close();
+
+        string Target();
+
+        AlphaResponse Send(TxEvent @event);
     }
-  }
 }

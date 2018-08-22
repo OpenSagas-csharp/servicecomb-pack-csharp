@@ -16,6 +16,7 @@
  */
 
 using System.Transactions;
+using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Transaction.Exception;
 

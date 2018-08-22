@@ -18,8 +18,8 @@
 using System;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.DependencyInjection;
-using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Transport.HttpClient;
 
 namespace Servicecomb.Saga.Omega.AspNetCore.Extensions

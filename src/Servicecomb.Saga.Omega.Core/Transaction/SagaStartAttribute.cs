@@ -19,9 +19,10 @@
 using System;
 using MethodBoundaryAspect.Fody.Attributes;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
+using Servicecomb.Saga.Omega.Abstractions.Transaction;
+using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Logging;
-using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Transaction.Impl;
 
 namespace Servicecomb.Saga.Omega.Core.Transaction
@@ -62,7 +63,6 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
         {
             _sagaStartAnnotationProcessor.OnError(null,"",args.Exception);
             _logger.Error($"Transaction {_omegaContext.GetGlobalTxId()} failed.", args.Exception);
-            _omegaContext.Clear();
         }
 
         private void InitializeOmegaContext()

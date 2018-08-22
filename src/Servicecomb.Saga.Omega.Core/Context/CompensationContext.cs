@@ -21,8 +21,8 @@ using System.Reflection;
 using System.Text;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
+using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Logging;
-using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
 
 namespace Servicecomb.Saga.Omega.Core.Context
 {

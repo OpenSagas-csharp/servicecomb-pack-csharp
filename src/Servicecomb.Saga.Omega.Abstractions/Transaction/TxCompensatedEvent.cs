@@ -15,15 +15,12 @@
  * limitations under the License.
  */
 
-namespace Servicecomb.Saga.Omega.Core.Transaction
+namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public class AlphaResponse
+  public class TxCompensatedEvent : TxEvent
   {
-    public bool Aborted { get; set; }
-
-    public AlphaResponse(bool aborted)
+    public TxCompensatedEvent(string globalTxId, string localTxId, string parentTxId, string compensationMethod) : base(EventType.TxCompensatedEvent, globalTxId, localTxId, parentTxId, compensationMethod, 0, "", 0)
     {
-      Aborted = aborted;
     }
   }
 }

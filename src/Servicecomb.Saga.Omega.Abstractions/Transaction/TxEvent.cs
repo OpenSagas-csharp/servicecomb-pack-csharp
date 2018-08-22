@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
+
 using System;
 using System.Linq;
+using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
 
-namespace Servicecomb.Saga.Omega.Core.Transaction
+namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
     public class TxEvent
     {

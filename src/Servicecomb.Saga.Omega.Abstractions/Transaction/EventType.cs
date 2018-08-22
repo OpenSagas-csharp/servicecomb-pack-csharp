@@ -15,10 +15,16 @@
  * limitations under the License.
  */
 
-namespace Servicecomb.Saga.Omega.Core.Transaction
+
+namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public interface IMessageHandler
+  public enum EventType
   {
-    void OnReceive(string globalTxId, string localTxId, string parentTxId, string compensationMethod, params byte[] payloads);
+    SagaStartedEvent,
+    TxStartedEvent,
+    TxEndedEvent,
+    TxAbortedEvent,
+    TxCompensatedEvent,
+    SagaEndedEvent
   }
 }

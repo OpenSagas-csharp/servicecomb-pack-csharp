@@ -16,15 +16,12 @@
  */
 
 
-namespace Servicecomb.Saga.Omega.Core.Transaction
+namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public enum EventType
+  public class SagaEndedEvent : TxEvent
   {
-    SagaStartedEvent,
-    TxStartedEvent,
-    TxEndedEvent,
-    TxAbortedEvent,
-    TxCompensatedEvent,
-    SagaEndedEvent
+    public SagaEndedEvent(string globalTxId, string localTxId) : base(EventType.SagaEndedEvent, globalTxId, localTxId, null, "", 0, "", 0)
+    {
+    }
   }
 }

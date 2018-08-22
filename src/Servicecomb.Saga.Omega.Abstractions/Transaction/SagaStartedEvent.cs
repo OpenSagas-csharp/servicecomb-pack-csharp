@@ -16,7 +16,7 @@
  */
 
 
-namespace Servicecomb.Saga.Omega.Core.Transaction
+namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
   public class SagaStartedEvent : TxEvent
   {

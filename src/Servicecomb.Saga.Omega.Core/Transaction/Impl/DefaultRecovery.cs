@@ -16,6 +16,7 @@
  */
 
 using Servicecomb.Saga.Omega.Abstractions.Logging;
+using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Logging;
 using Servicecomb.Saga.Omega.Core.Transaction.Exception;

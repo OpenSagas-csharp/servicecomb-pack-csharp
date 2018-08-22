@@ -15,17 +15,12 @@
  * limitations under the License.
  */
 
-using System;
-
-namespace Servicecomb.Saga.Omega.Core.Transaction
+namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public interface IEventAwareInterceptor
+  public class TxEndedEvent : TxEvent
   {
-    AlphaResponse PreIntercept(string parentTxId, string compensationMethod, int timeout, string retriesMethod,
- int retries, params Object[] message);
-
-    void PostIntercept(string parentTxId, string compensationMethod);
-
-    void OnError(string parentTxId, string compensationMethod, System.Exception throwable);
+    public TxEndedEvent(string globalTxId, string localTxId, string parentTxId, string compensationMethod) : base(EventType.TxEndedEvent, globalTxId, localTxId, parentTxId, compensationMethod, 0, "", 0)
+    {
+    }
   }
 }

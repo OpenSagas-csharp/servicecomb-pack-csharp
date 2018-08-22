@@ -20,9 +20,9 @@ using System.Reflection;
 using MethodBoundaryAspect.Fody.Attributes;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
+using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Logging;
-using Servicecomb.Saga.Omega.Core.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Transaction.Impl;
 
 namespace Servicecomb.Saga.Omega.Core.Transaction

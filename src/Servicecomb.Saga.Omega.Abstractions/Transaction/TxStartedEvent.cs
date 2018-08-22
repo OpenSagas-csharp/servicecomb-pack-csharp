@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-
-namespace Servicecomb.Saga.Omega.Core.Transaction
+namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public class SagaEndedEvent : TxEvent
+  public class TxStartedEvent : TxEvent
   {
-    public SagaEndedEvent(string globalTxId, string localTxId) : base(EventType.SagaEndedEvent, globalTxId, localTxId, null, "", 0, "", 0)
+    public TxStartedEvent(string globalTxId, string localTxId, string parentTxId, string compensationMethod, int timeout, string retryMethod, int retries, params object[] payloads) : base(EventType.TxStartedEvent, globalTxId, localTxId, parentTxId, compensationMethod, timeout, retryMethod, retries, payloads)
     {
     }
   }
