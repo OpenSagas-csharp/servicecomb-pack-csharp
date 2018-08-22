@@ -14,7 +14,6 @@
     <PackageReference Include="Grpc" Version="1.14.0" />
     <PackageReference Include="Grpc.Core" Version="1.14.0" />
     <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
-    <PackageReference Include="MessagePack" Version="1.7.3.4" />
     <PackageReference Include="MethodBoundaryAspect.Fody" Version="1.0.66" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.1.1" />
