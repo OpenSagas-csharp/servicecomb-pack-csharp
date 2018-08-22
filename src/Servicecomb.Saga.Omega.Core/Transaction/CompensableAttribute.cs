@@ -40,7 +40,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
 
         public int Timeout { get; set; }
 
-        private readonly ILogger _logger = LogManager.GetLogger(typeof(SagaStartAttributeAndAspect));
+        private readonly ILogger _logger = LogManager.GetLogger(typeof(SagaStartAttribute));
 
         private readonly CompensableInterceptor _compensableInterceptor;
 

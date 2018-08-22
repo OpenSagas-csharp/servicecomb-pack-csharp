@@ -51,7 +51,7 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
             builder.Services.AddSingleton<IRecoveryPolicy, DefaultRecovery>();
             builder.Services.AddSingleton<OmegaContext>();
             builder.Services.AddSingleton<CompensationContext>();
-            builder.Services.AddSingleton<SagaStartAttributeAndAspect>();
+            builder.Services.AddSingleton<Core.Transaction.SagaStartAttribute>();
 
             var option = new OmegaOptions();
             options(option);
