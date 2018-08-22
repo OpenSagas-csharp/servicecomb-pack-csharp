@@ -16,8 +16,6 @@
  */
 
 
-using System.Threading.Tasks;
-
 namespace Servicecomb.Saga.Omega.Core.Transaction
 {
     public interface IMessageSender
