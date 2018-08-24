@@ -16,7 +16,7 @@ namespace Omega.Sample.Booking.Controllers
             //return new string[] { "value1", "value2" };
             var httpClient = new HttpClient();
             httpClient.GetAsync("http://localhost:5002/api/values");
-          var content=  httpClient.GetAsync("http://localhost:5003/api/values");
+            var content=  httpClient.GetAsync("http://localhost:5003/api/values");
             Thread.Sleep(5000);
             throw  new NullReferenceException();
             return "";
