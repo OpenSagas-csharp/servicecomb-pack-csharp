@@ -10,7 +10,7 @@ namespace Omega.Sample.Booking.Controllers
     public class ValuesController : Controller
     {
         // GET api/values
-        [HttpGet, SagaStart]
+        [HttpGet, Servicecomb.Saga.Omega.Core.Context.SagaStart]
         public String Get()
         {
             //return new string[] { "value1", "value2" };
