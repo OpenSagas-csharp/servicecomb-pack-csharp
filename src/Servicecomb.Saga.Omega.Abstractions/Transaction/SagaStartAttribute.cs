@@ -29,7 +29,7 @@ namespace Servicecomb.Saga.Omega.Abstractions.Transaction
     {
         private readonly ILogger _logger = LogManager.GetLogger(typeof(SagaStartAttribute));
 
-        private readonly IEventAwareInterceptor _sagaStartAnnotationProcessor;
+        private readonly ISagaStartEventAwareInterceptor _sagaStartAnnotationProcessor;
 
         private readonly OmegaContext _omegaContext;
 
@@ -40,7 +40,7 @@ namespace Servicecomb.Saga.Omega.Abstractions.Transaction
             _omegaContext = (OmegaContext)ServiceLocator.Current.GetInstance(typeof(OmegaContext));
             //_sagaStartAnnotationProcessor = new SagaStartAnnotationProcessor(_omegaContext, (IEventAwareInterceptor)ServiceLocator.Current.GetInstance(typeof(IEventAwareInterceptor))) ;
             _sagaStartAnnotationProcessor =
-                (IEventAwareInterceptor) ServiceLocator.Current.GetInstance(typeof(IEventAwareInterceptor));
+                (ISagaStartEventAwareInterceptor) ServiceLocator.Current.GetInstance(typeof(ISagaStartEventAwareInterceptor));
         }
 
 

@@ -23,8 +23,8 @@ using Servicecomb.Saga.Omega.Core.Transaction.Exception;
 
 namespace Servicecomb.Saga.Omega.Core.Transaction.Impl
 {
-  public class SagaStartAnnotationProcessor : IEventAwareInterceptor
-  {
+  public class SagaStartAnnotationProcessor : ISagaStartEventAwareInterceptor
+    {
 
     private readonly OmegaContext _omegaContext;
     private readonly IMessageSender _sender;

@@ -66,7 +66,7 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
 
             builder.Services.AddSingleton<IEventAwareInterceptor, SagaStartAnnotationProcessor>();
             builder.Services.AddSingleton<IEventAwareInterceptor, CompensableInterceptor>();
-            builder.Services.AddSingleton<IEventAwareInterceptor>(services =>
+            builder.Services.AddSingleton<ISagaStartEventAwareInterceptor>(services =>
                 new SagaStartAnnotationProcessor(services.GetService<OmegaContext>(), services.GetService<IMessageSender>()));
 
             return builder;
