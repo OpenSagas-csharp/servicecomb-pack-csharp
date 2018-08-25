@@ -16,14 +16,14 @@
  */
 
 
+using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Diagnostics;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.Diagnostics;
-using Servicecomb.Saga.Omega.Core.Logging;
 using Servicecomb.Saga.Omega.Core.Transport.HttpClient;
-using ServiceLocator = Servicecomb.Saga.Omega.Core.Transaction.Exception.ServiceLocator;
+using ServiceLocator = Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions.ServiceLocator;
 
 namespace Servicecomb.Saga.Omega.Core.Transport.AspNetCore
 {
