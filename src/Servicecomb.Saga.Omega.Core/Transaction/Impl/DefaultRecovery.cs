@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Context;
-using Servicecomb.Saga.Omega.Core.Logging;
 using Servicecomb.Saga.Omega.Core.Transaction.Exception;
 
 namespace Servicecomb.Saga.Omega.Core.Transaction.Impl
@@ -42,7 +42,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction.Impl
     {
         private readonly ILogger _logger = LogManager.GetLogger(typeof(DefaultRecovery));
 
-        public void BeforeApply(CompensableInterceptor compensableInterceptor, OmegaContext omegaContext, string parentTxId, int retries, int timeout, string methodName, params object[] parameters)
+        public void BeforeApply(IEventAwareInterceptor compensableInterceptor, OmegaContext omegaContext, string parentTxId, int retries, int timeout, string methodName, params object[] parameters)
         {
             _logger.Debug($"Intercepting compensable method {methodName} with context {omegaContext}");
 
@@ -54,12 +54,12 @@ namespace Servicecomb.Saga.Omega.Core.Transaction.Impl
             throw new InvalidTransactionException($"Abort sub transaction {abortedLocalTxId}  because global transaction{omegaContext.GetLocalTxId()} has already aborted.");
         }
 
-        public void AfterApply(CompensableInterceptor compensableInterceptor, string parentTxId, string methodName)
+        public void AfterApply(IEventAwareInterceptor compensableInterceptor, string parentTxId, string methodName)
         {
             compensableInterceptor.PostIntercept(parentTxId, methodName);
         }
 
-        public void ErrorApply(CompensableInterceptor compensableInterceptor, string parentTxId, string methodName, System.Exception throwable)
+        public void ErrorApply(IEventAwareInterceptor compensableInterceptor, string parentTxId, string methodName, System.Exception throwable)
         {
             compensableInterceptor.OnError(parentTxId, methodName, throwable);
         }

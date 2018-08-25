@@ -23,11 +23,11 @@ using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Diagnostics;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
+using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Connector.GRPC;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.DependencyInjection;
 using Servicecomb.Saga.Omega.Core.Diagnostics;
-using Servicecomb.Saga.Omega.Core.Logging;
 using Servicecomb.Saga.Omega.Core.Serializing;
 using Servicecomb.Saga.Omega.Core.Transaction;
 using Servicecomb.Saga.Omega.Core.Transaction.Impl;
@@ -46,13 +46,10 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
             builder.Services.AddSingleton<ILoggerFactory, NullLoggerFactory>();
             builder.Services.AddSingleton(typeof(IIdGenerator<string>), typeof(UniqueIdGenerator));
             builder.Services.AddSingleton<IMessageHandler, CompensationMessageHandler>();
-            builder.Services.AddSingleton<IEventAwareInterceptor, SagaStartAnnotationProcessor>();
-            builder.Services.AddSingleton<IEventAwareInterceptor, CompensableInterceptor>();
             builder.Services.AddSingleton<IRecoveryPolicy, DefaultRecovery>();
             builder.Services.AddSingleton<OmegaContext>();
             builder.Services.AddSingleton<CompensationContext>();
-            builder.Services.AddSingleton<Core.Transaction.SagaStartAttribute>();
-
+            builder.Services.AddSingleton<SagaStartAttribute>();
             var option = new OmegaOptions();
             options(option);
             builder.Services.AddSingleton<IMessageSender>(new GrpcClientMessageSender(
@@ -66,6 +63,12 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
                 new JsonMessageFormat(),
                 option.GrpcServerAddress
                 ));
+
+            builder.Services.AddSingleton<IEventAwareInterceptor, SagaStartAnnotationProcessor>();
+            builder.Services.AddSingleton<IEventAwareInterceptor, CompensableInterceptor>();
+            builder.Services.AddSingleton<IEventAwareInterceptor>(services =>
+                new SagaStartAnnotationProcessor(services.GetService<OmegaContext>(), services.GetService<IMessageSender>()));
+
             return builder;
         }
 

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Context;
 
