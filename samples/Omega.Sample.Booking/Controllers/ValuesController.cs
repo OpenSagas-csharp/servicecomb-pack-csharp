@@ -36,6 +36,20 @@ namespace Omega.Sample.Booking.Controllers
             return Ok("ok");
         }
 
+
+        [HttpGet, SagaStart]
+        [Route("book1")]
+        public ActionResult Book1()
+        {
+            // init basic httpclient
+            var httpClient = new HttpClient();
+            // mark a reservation of car
+            httpClient.GetAsync("http://localhost:5002/api/values");
+            // book a hotel
+            httpClient.GetAsync("http://localhost:5003/api/values");
+            return Ok("ok");
+        }
+
         // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)
