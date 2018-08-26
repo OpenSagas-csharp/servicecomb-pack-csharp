@@ -8,7 +8,7 @@
 
 ![alpha-server-database-setting.png](imgs/alpha-server-database-setting.png)
 
-* **必须** 成功启动alpha-server,考虑到目前官方并没有给出docker image,导致环境搭建以及部署颇为麻烦,后期官方将会提供image上传docker hub提供给大家使用,启动成功参考下图提供server-address
+* **必须** 成功启动alpha-server,考虑到目前官方并没有给出docker image,导致环境搭建以及部署颇为麻烦,后期官方将会提供image上传docker hub提供给大家使用,启动成功参考下图
 
 ![alpha-server.png](imgs/alpha-server.png)
 
@@ -16,7 +16,7 @@
 
 ## 开始玩转分布式事务Saga
 
-克隆当前项目,然后请使用VS2017打开解决方案定位到sample目录,你会看到如下所示的三个实例应用程序,这里app都是基于TargetFramework=netcoreapp2.0的,所以需要相应的环境
+克隆当前项目,然后请使用VS2017打开解决方案定位到sample目录,你会看到如下所示的三个实例应用程序,这里app都是基于TargetFramework=netcoreapp2.0的,所以需要相应的启动环境
 
 ![sample-app-test.png](imgs/sample-app-test.png)
 
@@ -34,7 +34,7 @@ services.AddOmegaCore(option =>
 });
 ```
 
-现在一直都配置就绪了,下面开始我们的分布式事务的测试...
+这里需要对三个项目都做如上所示的基本配置即可,现在一直都配置就绪了,下面开始我们的分布式事务的测试吧...
 
 ## 分布式事务场景测试
 
@@ -42,4 +42,22 @@ services.AddOmegaCore(option =>
 
 ### 正常情况测试
 
-> 由 Booking 发起预定汽车和预定酒店的服务
+> 由 Booking 发起预定汽车和预定酒店的服务,且假设三个服务均可以正常访问的情况,正常启动如下图所示:
+![apps.png](imgs/apps.png)
+
+```csharp
+        [HttpGet, SagaStart]
+        [Route("book")]
+        public ActionResult Book()
+        {
+            // init basic httpclient
+            var httpClient = new HttpClient();
+            // mark a reservation of car
+            httpClient.GetAsync("http://localhost:5002/api/values");
+            // book a hotel
+            httpClient.GetAsync("http://localhost:5003/api/values");
+            // your busniess code
+            // for example save the order to your database
+            return Ok("ok");
+        }
+```

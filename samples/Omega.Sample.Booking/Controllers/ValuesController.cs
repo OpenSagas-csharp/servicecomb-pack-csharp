@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Servicecomb.Saga.Omega.Core.Transaction;
 
@@ -20,6 +21,19 @@ namespace Omega.Sample.Booking.Controllers
             Thread.Sleep(5000);
             throw new NullReferenceException();
             return "";
+        }
+
+        [HttpGet, SagaStart]
+        [Route("book")]
+        public async Task<ActionResult> Book()
+        {
+            // init basic httpclient
+            var httpClient = new HttpClient();
+            // mark a reservation of car
+            await httpClient.GetAsync("http://localhost:5002/api/values");
+            // book a hotel
+            await httpClient.GetAsync("http://localhost:5003/api/values");
+            return Ok("ok");
         }
 
         // GET api/values/5

@@ -8,7 +8,7 @@ namespace Omega.Sample.Hotel.Controllers
     {
         private readonly ConcurrentDictionary<int, HotelBooking> _bookings = new ConcurrentDictionary<int, HotelBooking>();
 
-        [Compensable("Cancel")]
+        [Compensable(nameof(Cancel))]
         public void Order(HotelBooking booking)
         {
             if (booking.Amount > 2)
