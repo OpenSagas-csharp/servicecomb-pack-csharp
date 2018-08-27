@@ -24,8 +24,8 @@ namespace Servicecomb.Saga.Omega.Abstractions.Context
     {
         public static readonly string GlobalTxIdKey = "X-Pack-Global-Transaction-Id";
         public static readonly string LocalTxIdKey = "X-Pack-Local-Transaction-Id";
-        private ThreadLocal<string> GlobalTxId = new ThreadLocal<string>();
-        private ThreadLocal<string> LocalTxId = new ThreadLocal<string>();
+        private AsyncLocal<string> GlobalTxId = new AsyncLocal<string>();
+        private AsyncLocal<string> LocalTxId = new AsyncLocal<string>();
         private IIdGenerator<String> IdGenerator;
 
         public OmegaContext(IIdGenerator<string> idGenerator)
@@ -70,8 +70,8 @@ namespace Servicecomb.Saga.Omega.Abstractions.Context
 
         public void Clear()
         {
-            GlobalTxId.Dispose();
-            LocalTxId.Dispose();
+            //GlobalTxId.Dispose();
+            //LocalTxId.Dispose();
         }
 
         public override string ToString()
