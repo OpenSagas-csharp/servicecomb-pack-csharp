@@ -71,8 +71,8 @@ namespace Servicecomb.Saga.Omega.Core.Context
 
         public void Clear()
         {
-            GlobalTxId.Dispose();
-            LocalTxId.Dispose();
+            //GlobalTxId.Dispose();
+            //LocalTxId.Dispose();
         }
 
         public override string ToString()
