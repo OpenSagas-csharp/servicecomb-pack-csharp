@@ -18,15 +18,11 @@
 using System;
 using System.Reflection;
 using MethodBoundaryAspect.Fody.Attributes;
+using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
-using Servicecomb.Saga.Omega.Abstractions.Transaction;
-using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
-using Servicecomb.Saga.Omega.Core.Context;
-using Servicecomb.Saga.Omega.Core.Logging;
-using Servicecomb.Saga.Omega.Core.Transaction.Impl;
-using ServiceLocator = Servicecomb.Saga.Omega.Core.Transaction.Exception.ServiceLocator;
+using ServiceLocator = Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions.ServiceLocator;
 
-namespace Servicecomb.Saga.Omega.Core.Transaction
+namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
     [AttributeUsage(AttributeTargets.Method)]
     public class CompensableAttribute : OnMethodBoundaryAspect
@@ -41,7 +37,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
 
         private readonly ILogger _logger = LogManager.GetLogger(typeof(SagaStartAttribute));
 
-        private readonly CompensableInterceptor _compensableInterceptor;
+        private readonly IEventAwareInterceptor _compensableInterceptor;
 
         private readonly OmegaContext _omegaContext;
 
@@ -56,7 +52,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
         public CompensableAttribute(string compensationMethod, int retryDelayInMilliseconds = 0, int timeout = 0, int retries = 0)
         {
             _omegaContext = (OmegaContext)ServiceLocator.Current.GetInstance(typeof(OmegaContext));
-            _compensableInterceptor = (CompensableInterceptor)ServiceLocator.Current.GetInstance(typeof(IEventAwareInterceptor));
+            _compensableInterceptor = (IEventAwareInterceptor)ServiceLocator.Current.GetInstance(typeof(IEventAwareInterceptor));
             _recoveryPolicy = (IRecoveryPolicy)ServiceLocator.Current.GetInstance(typeof(IRecoveryPolicy));
             _compensationContext =
                 (CompensationContext)ServiceLocator.Current.GetInstance(typeof(CompensationContext));
@@ -75,7 +71,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
 
             _omegaContext.NewLocalTxId();
             var paramBytes = _messageFormat.Serialize(args.Arguments);
-        
+
             _logger.Debug($"Initialized context {_omegaContext} before execution of method {args.Method.Name}");
             _recoveryPolicy.BeforeApply(_compensableInterceptor, _omegaContext, _parenttxId, Retries, Timeout, CompensationMethod, paramBytes);
         }

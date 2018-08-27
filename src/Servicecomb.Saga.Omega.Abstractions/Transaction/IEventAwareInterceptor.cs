@@ -28,4 +28,8 @@ namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 
     void OnError(string parentTxId, string compensationMethod, System.Exception throwable);
   }
+
+    public interface ISagaStartEventAwareInterceptor: IEventAwareInterceptor
+    {
+    }
 }

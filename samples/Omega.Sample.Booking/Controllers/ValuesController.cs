@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading;
 using Microsoft.AspNetCore.Mvc;
+using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Transaction;
 
 namespace Omega.Sample.Booking.Controllers

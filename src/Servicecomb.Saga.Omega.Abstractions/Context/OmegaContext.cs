@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-using Servicecomb.Saga.Omega.Abstractions.Context;
 using System;
 using System.Threading;
 
-namespace Servicecomb.Saga.Omega.Core.Context
+namespace Servicecomb.Saga.Omega.Abstractions.Context
 {
     public class OmegaContext
     {

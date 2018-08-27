@@ -18,22 +18,18 @@
 
 using System;
 using MethodBoundaryAspect.Fody.Attributes;
+using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
-using Servicecomb.Saga.Omega.Abstractions.Transaction;
-using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
-using Servicecomb.Saga.Omega.Core.Context;
-using Servicecomb.Saga.Omega.Core.Logging;
-using Servicecomb.Saga.Omega.Core.Transaction.Impl;
-using ServiceLocator = Servicecomb.Saga.Omega.Core.Transaction.Exception.ServiceLocator;
+using ServiceLocator = Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions.ServiceLocator;
 
-namespace Servicecomb.Saga.Omega.Core.Transaction
+namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
     [AttributeUsage(AttributeTargets.Method)]
     public class SagaStartAttribute: OnMethodBoundaryAspect
     {
         private readonly ILogger _logger = LogManager.GetLogger(typeof(SagaStartAttribute));
 
-        private readonly SagaStartAnnotationProcessor _sagaStartAnnotationProcessor;
+        private readonly ISagaStartEventAwareInterceptor _sagaStartAnnotationProcessor;
 
         private readonly OmegaContext _omegaContext;
 
@@ -42,7 +38,9 @@ namespace Servicecomb.Saga.Omega.Core.Transaction
         public SagaStartAttribute()
         {
             _omegaContext = (OmegaContext)ServiceLocator.Current.GetInstance(typeof(OmegaContext));
-            _sagaStartAnnotationProcessor = new SagaStartAnnotationProcessor(_omegaContext, (IMessageSender)ServiceLocator.Current.GetInstance(typeof(IMessageSender))) ;
+            //_sagaStartAnnotationProcessor = new SagaStartAnnotationProcessor(_omegaContext, (IEventAwareInterceptor)ServiceLocator.Current.GetInstance(typeof(IEventAwareInterceptor))) ;
+            _sagaStartAnnotationProcessor =
+                (ISagaStartEventAwareInterceptor) ServiceLocator.Current.GetInstance(typeof(ISagaStartEventAwareInterceptor));
         }
 
 

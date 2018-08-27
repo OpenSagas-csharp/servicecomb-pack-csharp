@@ -16,23 +16,22 @@
  */
 
 using System;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Servicecomb.Saga.Omega.Core.Transaction.Exception
+namespace Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions
 {
     public class ServiceLocator
     {
-        private readonly ServiceProvider _currentServiceProvider;
-        private static ServiceProvider _serviceProvider;
+        private readonly IServiceProvider _currentServiceProvider;
+        private static IServiceProvider _serviceProvider;
 
-        public ServiceLocator(ServiceProvider currentServiceProvider)
+        public ServiceLocator(IServiceProvider currentServiceProvider)
         {
             _currentServiceProvider = currentServiceProvider;
         }
 
         public static ServiceLocator Current => new ServiceLocator(_serviceProvider);
 
-        public static void SetLocatorProvider(ServiceProvider serviceProvider)
+        public static void SetLocatorProvider(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
@@ -44,7 +43,7 @@ namespace Servicecomb.Saga.Omega.Core.Transaction.Exception
 
         public TService GetInstance<TService>()
         {
-            return _currentServiceProvider.GetService<TService>();
+            return (TService) _currentServiceProvider.GetService(typeof(TService));
         }
     }
 }
