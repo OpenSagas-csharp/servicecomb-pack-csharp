@@ -22,7 +22,7 @@ namespace Omega.Sample.Car
 
             services.AddOmegaCore(option =>
             {
-                option.GrpcServerAddress = "192.168.198.169:8080";
+                option.GrpcServerAddress = "localhost:8080";
                 option.InstanceId = "Car123";
                 option.ServiceName = "Car";
             });

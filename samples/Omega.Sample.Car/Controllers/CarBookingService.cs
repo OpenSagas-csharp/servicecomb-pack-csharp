@@ -8,14 +8,14 @@ namespace Omega.Sample.Car.Controllers
         private readonly ConcurrentDictionary<int, CarBooking> _bookings = new ConcurrentDictionary<int, CarBooking>();
 
 
-        [Compensable("Cancel")]
+        [Compensable(nameof(CancelCar))]
         public void Order(CarBooking carBooking)
         {
             carBooking.Confirm();
             _bookings.TryAdd(carBooking.Id, carBooking);
         }
 
-        void Cancel(CarBooking booking)
+        void CancelCar(CarBooking booking)
         {
             _bookings.TryGetValue(booking.Id, out var carBooking);
             carBooking?.Cancel();
