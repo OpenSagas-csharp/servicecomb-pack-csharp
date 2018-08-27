@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using Servicecomb.Saga.Omega.Core.Transaction;
 
 namespace Omega.Sample.Car.Controllers
@@ -13,6 +14,7 @@ namespace Omega.Sample.Car.Controllers
         {
             carBooking.Confirm();
             _bookings.TryAdd(carBooking.Id, carBooking);
+            //throw new Exception("test car serivice error");
         }
 
         void CancelCar(CarBooking booking)
