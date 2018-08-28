@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Servicecomb.Saga.Omega.Abstractions.Diagnostics;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
-using Servicecomb.Saga.Omega.Core.Logging;
 using Servicecomb.Saga.Omega.Core.Utils;
 
 namespace Servicecomb.Saga.Omega.Core.Diagnostics

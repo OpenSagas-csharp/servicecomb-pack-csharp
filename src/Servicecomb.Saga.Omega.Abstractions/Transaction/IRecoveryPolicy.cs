@@ -16,29 +16,16 @@
  */
 
 using System;
-using Servicecomb.Saga.Omega.Abstractions.Logging;
+using Servicecomb.Saga.Omega.Abstractions.Context;
 
-namespace Servicecomb.Saga.Omega.Core.Logging
+namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public static class LogManager
-  {
-    private static readonly ILoggerFactory defaultLoggerFactory = new NullLoggerFactory();
-    private static ILoggerFactory _loggerFactory;
-
-    public static ILogger GetLogger(Type type)
+    public interface IRecoveryPolicy
     {
-      var loggerFactory = _loggerFactory ?? defaultLoggerFactory;
-      return loggerFactory.CreateLogger(type);
-    }
+        void BeforeApply(IEventAwareInterceptor compensableInterceptor, OmegaContext context, String parentTxId, int retries, int timeout, string methodName,params object[] parameters);
 
-    public static ILogger GetLogger<T>()
-    {
-      return GetLogger(typeof(T));
-    }
+        void AfterApply(IEventAwareInterceptor compensableInterceptor, string parentTxId, string methodName);
 
-    public static void SetLoggerFactory(ILoggerFactory loggerFactory)
-    {
-      _loggerFactory = loggerFactory;
+        void ErrorApply(IEventAwareInterceptor compensableInterceptor, string parentTxId, string methodName, System.Exception throwable);
     }
-  }
 }

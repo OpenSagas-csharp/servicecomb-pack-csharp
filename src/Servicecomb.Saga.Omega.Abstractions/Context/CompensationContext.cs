@@ -21,11 +21,9 @@ using System.Reflection;
 using System.Text;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
-using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
-using Servicecomb.Saga.Omega.Core.Logging;
-using ServiceLocator = Servicecomb.Saga.Omega.Core.Transaction.Exception.ServiceLocator;
+using ServiceLocator = Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions.ServiceLocator;
 
-namespace Servicecomb.Saga.Omega.Core.Context
+namespace Servicecomb.Saga.Omega.Abstractions.Context
 {
     public class CompensationContext
     {

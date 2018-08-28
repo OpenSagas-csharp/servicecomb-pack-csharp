@@ -14,18 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 using System;
-using Servicecomb.Saga.Omega.Core.Context;
-using Servicecomb.Saga.Omega.Core.Transaction.Impl;
 
-namespace Servicecomb.Saga.Omega.Core.Transaction
+namespace Servicecomb.Saga.Omega.Abstractions.Logging
 {
-    public interface IRecoveryPolicy
+  public class NullLoggerFactory : ILoggerFactory
+  {
+    public ILogger CreateLogger(Type type)
     {
-        void BeforeApply(CompensableInterceptor compensableInterceptor, OmegaContext context, String parentTxId, int retries, int timeout, string methodName,params object[] parameters);
-
-        void AfterApply(CompensableInterceptor compensableInterceptor, string parentTxId, string methodName);
-
-        void ErrorApply(CompensableInterceptor compensableInterceptor, string parentTxId, string methodName, System.Exception throwable);
+      return new NullLogger();
     }
+  }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Transaction;
 
 namespace Omega.Sample.Car.Controllers
