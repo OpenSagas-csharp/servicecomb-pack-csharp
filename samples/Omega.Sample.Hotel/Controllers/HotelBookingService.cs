@@ -9,7 +9,7 @@ namespace Omega.Sample.Hotel.Controllers
     {
         private readonly ConcurrentDictionary<int, HotelBooking> _bookings = new ConcurrentDictionary<int, HotelBooking>();
 
-        [Compensable("Cancel")]
+        [Compensable(nameof(CancelHotel))]
         public void Order(HotelBooking booking)
         {
             if (booking.Amount > 2)
@@ -20,7 +20,7 @@ namespace Omega.Sample.Hotel.Controllers
             _bookings.TryAdd(booking.Id, booking);
         }
 
-        void Cancel(HotelBooking booking)
+        void CancelHotel(HotelBooking booking)
         {
             _bookings.TryGetValue(booking.Id, out var hotelBooking);
             hotelBooking?.Cancel();

@@ -10,14 +10,14 @@ namespace Omega.Sample.Hotel.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            HotelBookingService bookingService =new HotelBookingService();
+            HotelBookingService bookingService = new HotelBookingService();
             HotelBooking hotelBooking = new HotelBooking()
             {
                 Id = 1,
                 Amount = 1,
                 Name = "test"
             };
-           bookingService.Order(hotelBooking);
+            bookingService.Order(hotelBooking);
             return new string[] { "value1", "value2" };
         }
 
