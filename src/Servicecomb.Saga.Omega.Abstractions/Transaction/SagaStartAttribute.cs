@@ -38,7 +38,6 @@ namespace Servicecomb.Saga.Omega.Abstractions.Transaction
         public SagaStartAttribute()
         {
             _omegaContext = (OmegaContext)ServiceLocator.Current.GetInstance(typeof(OmegaContext));
-            //_sagaStartAnnotationProcessor = new SagaStartAnnotationProcessor(_omegaContext, (IEventAwareInterceptor)ServiceLocator.Current.GetInstance(typeof(IEventAwareInterceptor))) ;
             _sagaStartAnnotationProcessor =
                 (ISagaStartEventAwareInterceptor) ServiceLocator.Current.GetInstance(typeof(ISagaStartEventAwareInterceptor));
         }
@@ -47,7 +46,7 @@ namespace Servicecomb.Saga.Omega.Abstractions.Transaction
         public override void OnEntry(MethodExecutionArgs args)
         {
             InitializeOmegaContext();
-            _sagaStartAnnotationProcessor.PreIntercept(_omegaContext.GetGlobalTxId(), args.Method.Name, 0, "", 0);
+            _sagaStartAnnotationProcessor.PreIntercept(_omegaContext.GetGlobalTxId(), args.Method.Name, TimeOut, "", 0);
             _logger.Debug($"Initialized context {_omegaContext} before execution of method {args.Method.Name}");
         }
 
