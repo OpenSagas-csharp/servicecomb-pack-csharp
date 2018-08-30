@@ -17,7 +17,6 @@
 
 using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
-using Servicecomb.Saga.Omega.Core.Context;
 
 namespace Servicecomb.Saga.Omega.Core.Transaction.Impl
 {

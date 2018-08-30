@@ -14,7 +14,7 @@ namespace Omega.Sample.Booking.Controllers
     public class ValuesController : Controller
     {
         // GET api/values
-        [HttpGet, SagaStart]
+        [HttpGet, SagaStart(TimeOut = 3)]
         public String Get()
         {
             //return new string[] { "value1", "value2" };
@@ -66,6 +66,19 @@ namespace Omega.Sample.Booking.Controllers
             httpClient.GetAsync("http://localhost:5002/api/values").Wait();
             // book a hotel
             httpClient.GetAsync("http://localhost:5003/api/values").Wait();
+            return Ok("ok");
+        }
+        [HttpGet, SagaStart(TimeOut = 3)]
+        [Route("book3")]
+        public ActionResult Book3()
+        {
+            // init basic httpclient
+            var httpClient = new HttpClient();
+            // mark a reservation of car , this will be throw a exception from car-service
+            httpClient.GetAsync("http://localhost:5002/api/values").Wait();
+            // book a hotel
+            httpClient.GetAsync("http://localhost:5003/api/values").Wait();
+            Thread.Sleep(5000);
             return Ok("ok");
         }
 
