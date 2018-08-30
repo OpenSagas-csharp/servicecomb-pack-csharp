@@ -1,0 +1,34 @@
+
+version: '2'
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USE: saga
+      POSTGRES_USER: saga
+      POSTGRES_PASSWORD: password
+    networks:
+      - saga
+    
+  alpha-server:
+    image: djlnet/alpha-server:0.3.0-SNAPSHOT
+    container_name: alpha-server
+    ports:
+      - "8080:8080"
+      - "8090:8090"
+    environment:
+      JAVA_OPTS: -Dspring.profiles.active=prd -Dspring.datasource.url=jdbc:postgresql://postgres/saga?useSSL=false
+    networks:
+      - saga
+    depends_on:
+      - postgres
+
+networks:
+
+  saga:
+    driver: bridge
+
