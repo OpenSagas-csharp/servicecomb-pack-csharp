@@ -8,11 +8,15 @@
 
 ![alpha-server-database-setting.png](imgs/alpha-server-database-setting.png)
 
-* **必须** 成功启动alpha-server,考虑到目前官方并没有给出docker image,导致环境搭建以及部署颇为麻烦,后期官方将会提供image上传docker hub提供给大家使用,启动成功参考下图
+* **必须** 成功启动alpha-server,导致环境搭建以及部署颇为麻烦,后期官方将会提供image上传docker hub提供给大家使用,启动成功参考下图
 
 ![alpha-server.png](imgs/alpha-server.png)
 
 * **可选** 同时saga提供了UI可视化界面,直接idea中启动saga-web即可
+
+* **支持docker-compose**:根目录提供了一个dockercompose文件,只需要在工程的根目录下执行docker-compose up -d 即可，上面的操作可以给感兴趣的调试环境的搭建。
+
+
 
 ## 开始玩转分布式事务Saga
 
