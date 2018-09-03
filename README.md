@@ -322,20 +322,3 @@ Car-Service 补偿方法触发执行命中断点如下图:
 
 
 
-####  Vendors
-
-1.[skywalking-netcore](https://github.com/OpenSkywalking/skywalking-netcore)
-- [AnonymousObject.cs](https://github.com/OpenSkywalking/skywalking-netcore/tree/master/src/SkyWalking.Core/Diagnostics/AnonymousObject.cs)
-- [DiagnosticName.cs](https://github.com/OpenSkywalking/skywalking-netcore/tree/master/src/SkyWalking.Core/Diagnostics/DiagnosticName.cs)
-- [IParameterResolver.cs](https://github.com/OpenSkywalking/skywalking-netcore/tree/master/src/SkyWalking.Core/Diagnostics/IParameterResolver.cs)
-- [NullParameterResolver.cs](https://github.com/OpenSkywalking/skywalking-netcore/tree/master/src/SkyWalking.Core/Diagnostics/NullParameterResolver.cs)
-- [ObjectAttribute.cs](https://github.com/OpenSkywalking/skywalking-netcore/tree/master/src/SkyWalking.Core/Diagnostics/ObjectAttribute.cs)
-- [ParameterBinder.cs](https://github.com/OpenSkywalking/skywalking-netcore/tree/master/src/SkyWalking.Core/Diagnostics/ParameterBinder.cs)
-- [PropertyAttribute.cs](https://github.com/OpenSkywalking/skywalking-netcore/tree/master/src/SkyWalking.Core/Diagnostics/PropertyAttribute.cs)
-- [TracingDiagnosticMethod.cs](https://github.com/OpenSkywalking/skywalking-netcore/tree/master/src/SkyWalking.Core/Diagnostics/TracingDiagnosticMethod.cs)
-- [TracingDiagnosticMethodCollection.cs](https://github.com/OpenSkywalking/skywalking-netcore/tree/master/src/SkyWalking.Core/Diagnostics/TracingDiagnosticMethodCollection.cs)
-- [TracingDiagnosticObserver.cs](https://github.com/OpenSkywalking/skywalking-netcore/tree/master/src/SkyWalking.Core/Diagnostics/TracingDiagnosticObserver.cs)
-- [TracingDiagnosticProcessorObserver.cs](https://github.com/OpenSkywalking/skywalking-netcore/tree/master/src/SkyWalking.Core/Diagnostics/TracingDiagnosticProcessorObserver.cs)
-
-
-
