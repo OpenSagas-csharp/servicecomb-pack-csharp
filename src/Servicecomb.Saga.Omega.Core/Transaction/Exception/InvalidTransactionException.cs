@@ -17,15 +17,15 @@
 
 namespace Servicecomb.Saga.Omega.Core.Transaction.Exception
 {
-  public class InvalidTransactionException : System.Exception
-  {
-    public InvalidTransactionException(string message) : base(message)
+    public class InvalidTransactionException : System.Exception
     {
+        public InvalidTransactionException(string message) : base(message)
+        {
 
-    }
+        }
 
-    public InvalidTransactionException(string cause, System.Exception throwable) : base(cause, throwable)
-    {
+        public InvalidTransactionException(string cause, System.Exception throwable) : base(cause, throwable)
+        {
+        }
     }
-  }
 }

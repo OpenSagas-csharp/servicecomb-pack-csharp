@@ -19,11 +19,9 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using Servicecomb.Saga.Omega.Abstractions.Diagnostics;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Diagnostics;
-using Servicecomb.Saga.Omega.Core.Transaction;
 
 namespace Servicecomb.Saga.Omega.AspNetCore
 {

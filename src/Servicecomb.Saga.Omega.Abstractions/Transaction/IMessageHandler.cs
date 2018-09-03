@@ -17,8 +17,8 @@
 
 namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public interface IMessageHandler
-  {
-    void OnReceive(string globalTxId, string localTxId, string parentTxId, string compensationMethod, params byte[] payloads);
-  }
+    public interface IMessageHandler
+    {
+        void OnReceive(string globalTxId, string localTxId, string parentTxId, string compensationMethod, params byte[] payloads);
+    }
 }

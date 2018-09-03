@@ -26,10 +26,10 @@ using Servicecomb.Saga.Omega.Core.Utils;
 
 namespace Servicecomb.Saga.Omega.Core.Diagnostics
 {
-    public class DiagnosticListenerObserver: IObserver<DiagnosticListener>
+    public class DiagnosticListenerObserver : IObserver<DiagnosticListener>
     {
         private readonly IEnumerable<IDiagnosticItercept> _diagnosticItercepts;
-        private static readonly object _object=new object();
+        private static readonly object _object = new object();
 
         public DiagnosticListenerObserver(IEnumerable<IDiagnosticItercept> diagnosticItercepts)
         {

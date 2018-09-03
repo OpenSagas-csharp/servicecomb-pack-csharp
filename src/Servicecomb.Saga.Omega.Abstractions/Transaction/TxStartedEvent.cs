@@ -17,10 +17,10 @@
 
 namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public class TxStartedEvent : TxEvent
-  {
-    public TxStartedEvent(string globalTxId, string localTxId, string parentTxId, string compensationMethod, int timeout, string retryMethod, int retries, params object[] payloads) : base(EventType.TxStartedEvent, globalTxId, localTxId, parentTxId, compensationMethod, timeout, retryMethod, retries, payloads)
+    public class TxStartedEvent : TxEvent
     {
+        public TxStartedEvent(string globalTxId, string localTxId, string parentTxId, string compensationMethod, int timeout, string retryMethod, int retries, params object[] payloads) : base(EventType.TxStartedEvent, globalTxId, localTxId, parentTxId, compensationMethod, timeout, retryMethod, retries, payloads)
+        {
+        }
     }
-  }
 }

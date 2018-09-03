@@ -29,7 +29,7 @@ namespace Servicecomb.Saga.Omega.Core.Transport.HttpClient
         private readonly ILogger _logger = LogManager.GetLogger(typeof(HttpClientDiagnosticIntercept));
         private readonly OmegaContext _omegaContext;
         public string ListenerName { get; } = "HttpHandlerDiagnosticListener";
-        
+
         public HttpClientDiagnosticIntercept()
         {
             _omegaContext = (OmegaContext)ServiceLocator.Current.GetInstance(typeof(OmegaContext));

@@ -39,7 +39,7 @@ namespace Servicecomb.Saga.Omega.Abstractions.Context
         public void Apply(string globalTxId, string localTxId, string compensationMethod, params byte[] payloads)
         {
             CompensationContextInternal contextInternal = null;
-           
+
             try
             {
                 _contexts.TryGetValue(compensationMethod, out contextInternal);
@@ -49,9 +49,9 @@ namespace Servicecomb.Saga.Omega.Abstractions.Context
                 var messageFormat = (IMessageSerializer)ServiceLocator.Current.GetInstance(typeof(IMessageSerializer));
                 var parameterInfos = contextInternal.CompensationMethod.GetParameters();
 
-                var result =messageFormat.Deserialize(Encoding.UTF8.GetString(payloads), typeof(object[])) as object[] ;
+                var result = messageFormat.Deserialize(Encoding.UTF8.GetString(payloads), typeof(object[])) as object[];
                 var objects = new object[] { };
-                
+
                 if (result != null)
                 {
                     objects = new object[result.Length];

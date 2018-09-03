@@ -22,42 +22,42 @@ using Servicecomb.Saga.Omega.Core.Transaction.Exception;
 
 namespace Servicecomb.Saga.Omega.Core.Transaction.Impl
 {
-  public class SagaStartAnnotationProcessor : ISagaStartEventAwareInterceptor
+    public class SagaStartAnnotationProcessor : ISagaStartEventAwareInterceptor
     {
 
-    private readonly OmegaContext _omegaContext;
-    private readonly IMessageSender _sender;
+        private readonly OmegaContext _omegaContext;
+        private readonly IMessageSender _sender;
 
-    public SagaStartAnnotationProcessor(OmegaContext omegaContext, IMessageSender sender)
-    {
-      _omegaContext = omegaContext;
-      _sender = sender;
-    }
-    public AlphaResponse PreIntercept(string parentTxId, string compensationMethod, int timeout, string retriesMethod, int retries,
-      params object[] message)
-    {
-      try
-      {
-        return _sender.Send(new SagaStartedEvent(_omegaContext.GetGlobalTxId(), _omegaContext.GetLocalTxId(), timeout));
-      }
-      catch (OmegaException ex)
-      {
-        throw new TransactionException(ex.Message, ex);
-      }
-    }
+        public SagaStartAnnotationProcessor(OmegaContext omegaContext, IMessageSender sender)
+        {
+            _omegaContext = omegaContext;
+            _sender = sender;
+        }
+        public AlphaResponse PreIntercept(string parentTxId, string compensationMethod, int timeout, string retriesMethod, int retries,
+          params object[] message)
+        {
+            try
+            {
+                return _sender.Send(new SagaStartedEvent(_omegaContext.GetGlobalTxId(), _omegaContext.GetLocalTxId(), timeout));
+            }
+            catch (OmegaException ex)
+            {
+                throw new TransactionException(ex.Message, ex);
+            }
+        }
 
-    public void PostIntercept(string parentTxId, string compensationMethod)
-    {
-      var response = _sender.Send(new SagaEndedEvent(_omegaContext.GetGlobalTxId(), _omegaContext.GetLocalTxId()));
-      if (response.Aborted)
-      {
-        throw new OmegaException($"transaction {parentTxId}  is aborted");
-      }
-    }
+        public void PostIntercept(string parentTxId, string compensationMethod)
+        {
+            var response = _sender.Send(new SagaEndedEvent(_omegaContext.GetGlobalTxId(), _omegaContext.GetLocalTxId()));
+            if (response.Aborted)
+            {
+                throw new OmegaException($"transaction {parentTxId}  is aborted");
+            }
+        }
 
-    public void OnError(string parentTxId, string compensationMethod, System.Exception throwable)
-    {
-      _sender.Send(new TxAbortedEvent(_omegaContext.GetGlobalTxId(), _omegaContext.GetGlobalTxId(), null, compensationMethod, throwable));
+        public void OnError(string parentTxId, string compensationMethod, System.Exception throwable)
+        {
+            _sender.Send(new TxAbortedEvent(_omegaContext.GetGlobalTxId(), _omegaContext.GetGlobalTxId(), null, compensationMethod, throwable));
+        }
     }
-  }
 }

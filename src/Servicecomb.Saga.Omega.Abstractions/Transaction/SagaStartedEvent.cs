@@ -18,10 +18,10 @@
 
 namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public class SagaStartedEvent : TxEvent
-  {
-    public SagaStartedEvent(string globalTxId, string localTxId, int timeout) : base(EventType.SagaStartedEvent, globalTxId, localTxId, null, "", timeout, "", 0)
+    public class SagaStartedEvent : TxEvent
     {
+        public SagaStartedEvent(string globalTxId, string localTxId, int timeout) : base(EventType.SagaStartedEvent, globalTxId, localTxId, null, "", timeout, "", 0)
+        {
+        }
     }
-  }
 }

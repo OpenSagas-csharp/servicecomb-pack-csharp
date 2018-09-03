@@ -19,11 +19,11 @@ using System;
 
 namespace Servicecomb.Saga.Omega.Abstractions.Logging
 {
-  public class NullLoggerFactory : ILoggerFactory
-  {
-    public ILogger CreateLogger(Type type)
+    public class NullLoggerFactory : ILoggerFactory
     {
-      return new NullLogger();
+        public ILogger CreateLogger(Type type)
+        {
+            return new NullLogger();
+        }
     }
-  }
 }

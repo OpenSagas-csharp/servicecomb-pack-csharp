@@ -20,8 +20,6 @@ using System.Threading;
 using Google.Protobuf;
 using Grpc.Core;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
-using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
-using Servicecomb.Saga.Omega.Core.Transaction;
 using Servicecomb.Saga.Omega.Protocol;
 using ServiceLocator = Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions.ServiceLocator;
 
@@ -33,7 +31,7 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
         private readonly TxEventService.TxEventServiceClient _client;
         private readonly IMessageSerializer _serializer;
         private readonly string _target;
-        private  IMessageHandler _messageHandler => (IMessageHandler)ServiceLocator.Current.GetInstance(typeof(IMessageHandler));
+        private IMessageHandler _messageHandler => (IMessageHandler)ServiceLocator.Current.GetInstance(typeof(IMessageHandler));
 
         public GrpcClientMessageSender(GrpcServiceConfig serviceConfig, Channel channel, IMessageSerializer serializer, string address)
         {
@@ -44,13 +42,13 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
 
         }
 
-        public async  void OnConnected()
+        public async void OnConnected()
         {
             var command = _client.OnConnected(_serviceConfig);
             while (await command.ResponseStream.MoveNext(CancellationToken.None))
             {
 
-                _messageHandler.OnReceive(command.ResponseStream.Current.GlobalTxId, command.ResponseStream.Current.LocalTxId, command.ResponseStream.Current.ParentTxId, command.ResponseStream.Current.CompensationMethod, command.ResponseStream.Current.Payloads.ToByteArray()) ;
+                _messageHandler.OnReceive(command.ResponseStream.Current.GlobalTxId, command.ResponseStream.Current.LocalTxId, command.ResponseStream.Current.ParentTxId, command.ResponseStream.Current.CompensationMethod, command.ResponseStream.Current.Payloads.ToByteArray());
             }
 
         }
@@ -78,8 +76,8 @@ namespace Servicecomb.Saga.Omega.Core.Connector.GRPC
 
         private GrpcTxEvent ConvertEvent(TxEvent @event)
         {
-            
-            var payloads = ByteString.CopyFrom(_serializer.Serialize(@event.Payloads),Encoding.UTF8);           
+
+            var payloads = ByteString.CopyFrom(_serializer.Serialize(@event.Payloads), Encoding.UTF8);
             return new GrpcTxEvent()
             {
                 ServiceName = _serviceConfig.ServiceName,

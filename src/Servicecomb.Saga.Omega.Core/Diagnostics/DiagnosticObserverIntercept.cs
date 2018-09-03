@@ -18,11 +18,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
 using Microsoft.Extensions.DiagnosticAdapter;
 using Servicecomb.Saga.Omega.Abstractions.Diagnostics;
 
@@ -67,7 +64,7 @@ namespace Servicecomb.Saga.Omega.Core.Diagnostics
                 object[] arg = { property?.GetValue(value.Value) };
                 method.Invoke(_diagnosticItercept, arg);
             }
-            
+
         }
 
         void Inint()

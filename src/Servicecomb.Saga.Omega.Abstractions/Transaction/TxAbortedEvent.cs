@@ -18,23 +18,23 @@
 
 namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public class TxAbortedEvent : TxEvent
-  {
-    private const int PayloadsMaxLength = 10240;
-
-    public TxAbortedEvent(string globalTxId, string localTxId, string parentTxId, string compensationMethod, System.Exception throwable) : base(EventType.TxAbortedEvent, globalTxId, localTxId, parentTxId, compensationMethod, 0, "", 0,
-        StackTrace(throwable))
+    public class TxAbortedEvent : TxEvent
     {
-    }
+        private const int PayloadsMaxLength = 10240;
 
-    private static string StackTrace(System.Exception throwable)
-    {
-      if (throwable.StackTrace.Length > PayloadsMaxLength)
-      {
-        return throwable.StackTrace.Substring(PayloadsMaxLength);
-      }
+        public TxAbortedEvent(string globalTxId, string localTxId, string parentTxId, string compensationMethod, System.Exception throwable) : base(EventType.TxAbortedEvent, globalTxId, localTxId, parentTxId, compensationMethod, 0, "", 0,
+            StackTrace(throwable))
+        {
+        }
 
-      return throwable.StackTrace;
+        private static string StackTrace(System.Exception throwable)
+        {
+            if (throwable.StackTrace.Length > PayloadsMaxLength)
+            {
+                return throwable.StackTrace.Substring(PayloadsMaxLength);
+            }
+
+            return throwable.StackTrace;
+        }
     }
-  }
 }

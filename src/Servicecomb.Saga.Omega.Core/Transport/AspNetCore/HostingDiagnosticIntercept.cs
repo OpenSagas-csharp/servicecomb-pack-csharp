@@ -20,13 +20,11 @@ using Microsoft.Extensions.DiagnosticAdapter;
 using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Diagnostics;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
-using Servicecomb.Saga.Omega.Core.Diagnostics;
-using Servicecomb.Saga.Omega.Core.Transport.HttpClient;
 using ServiceLocator = Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions.ServiceLocator;
 
 namespace Servicecomb.Saga.Omega.Core.Transport.AspNetCore
 {
-    public class HostingDiagnosticIntercept: IDiagnosticItercept
+    public class HostingDiagnosticIntercept : IDiagnosticItercept
     {
         private readonly ILogger _logger = LogManager.GetLogger(typeof(HostingDiagnosticIntercept));
         private readonly OmegaContext _omegaContext;

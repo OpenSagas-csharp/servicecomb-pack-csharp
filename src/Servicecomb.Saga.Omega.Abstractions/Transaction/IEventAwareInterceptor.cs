@@ -19,17 +19,17 @@ using System;
 
 namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public interface IEventAwareInterceptor
-  {
-    AlphaResponse PreIntercept(string parentTxId, string compensationMethod, int timeout, string retriesMethod,
- int retries, params Object[] message);
+    public interface IEventAwareInterceptor
+    {
+        AlphaResponse PreIntercept(string parentTxId, string compensationMethod, int timeout, string retriesMethod,
+     int retries, params Object[] message);
 
-    void PostIntercept(string parentTxId, string compensationMethod);
+        void PostIntercept(string parentTxId, string compensationMethod);
 
-    void OnError(string parentTxId, string compensationMethod, System.Exception throwable);
-  }
+        void OnError(string parentTxId, string compensationMethod, System.Exception throwable);
+    }
 
-    public interface ISagaStartEventAwareInterceptor: IEventAwareInterceptor
+    public interface ISagaStartEventAwareInterceptor : IEventAwareInterceptor
     {
     }
 }

@@ -16,7 +16,6 @@
  */
 
 using System;
-using System.Diagnostics;
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,13 +23,11 @@ using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Diagnostics;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
-using Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions;
 using Servicecomb.Saga.Omega.Core.Connector.GRPC;
 using Servicecomb.Saga.Omega.Core.Context;
 using Servicecomb.Saga.Omega.Core.DependencyInjection;
 using Servicecomb.Saga.Omega.Core.Diagnostics;
 using Servicecomb.Saga.Omega.Core.Serializing;
-using Servicecomb.Saga.Omega.Core.Transaction;
 using Servicecomb.Saga.Omega.Core.Transaction.Impl;
 using Servicecomb.Saga.Omega.Core.Transport.AspNetCore;
 using Servicecomb.Saga.Omega.Protocol;

@@ -22,7 +22,7 @@ namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
     public interface IRecoveryPolicy
     {
-        void BeforeApply(IEventAwareInterceptor compensableInterceptor, OmegaContext context, String parentTxId, int retries, int timeout, string methodName,params object[] parameters);
+        void BeforeApply(IEventAwareInterceptor compensableInterceptor, OmegaContext context, String parentTxId, int retries, int timeout, string methodName, params object[] parameters);
 
         void AfterApply(IEventAwareInterceptor compensableInterceptor, string parentTxId, string methodName);
 

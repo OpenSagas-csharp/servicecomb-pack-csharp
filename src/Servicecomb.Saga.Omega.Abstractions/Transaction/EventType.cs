@@ -18,13 +18,13 @@
 
 namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-  public enum EventType
-  {
-    SagaStartedEvent,
-    TxStartedEvent,
-    TxEndedEvent,
-    TxAbortedEvent,
-    TxCompensatedEvent,
-    SagaEndedEvent
-  }
+    public enum EventType
+    {
+        SagaStartedEvent,
+        TxStartedEvent,
+        TxEndedEvent,
+        TxAbortedEvent,
+        TxCompensatedEvent,
+        SagaEndedEvent
+    }
 }

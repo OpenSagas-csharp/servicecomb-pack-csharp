@@ -18,8 +18,8 @@
 
 namespace Servicecomb.Saga.Omega.Abstractions.Context
 {
-  public interface IIdGenerator<out T>
-  {
-    T NextId();
-  }
+    public interface IIdGenerator<out T>
+    {
+        T NextId();
+    }
 }

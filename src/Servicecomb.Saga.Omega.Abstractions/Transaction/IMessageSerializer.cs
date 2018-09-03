@@ -22,6 +22,6 @@ namespace Servicecomb.Saga.Omega.Abstractions.Transaction
     public interface IMessageSerializer
     {
         string Serialize<T>(T objects);
-        object Deserialize(string message,Type type);
+        object Deserialize(string message, Type type);
     }
 }

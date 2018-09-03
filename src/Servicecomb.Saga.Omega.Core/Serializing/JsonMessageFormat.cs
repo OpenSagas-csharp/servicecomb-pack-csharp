@@ -24,11 +24,11 @@ namespace Servicecomb.Saga.Omega.Core.Serializing
 {
     public class JsonMessageFormat : IMessageFormat
     {
-        public object Deserialize([NotNull] string message,Type type)
+        public object Deserialize([NotNull] string message, Type type)
         {
 
 
-            return  JsonConvert.DeserializeObject(message, type);
+            return JsonConvert.DeserializeObject(message, type);
         }
 
         public string Serialize<T>([NotNull] T objects)
