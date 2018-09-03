@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using Servicecomb.Saga.Omega.Abstractions.Diagnostics;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using Servicecomb.Saga.Omega.Abstractions.Transaction;
 using Servicecomb.Saga.Omega.Core.Diagnostics;
@@ -28,11 +29,11 @@ namespace Servicecomb.Saga.Omega.AspNetCore
 {
     public class OmegaHostedService : IHostedService
     {
-        private readonly TracingDiagnosticProcessorObserver _diagnosticObserver;
+        private readonly DiagnosticListenerObserver _diagnosticObserver;
         private readonly IMessageSender _messageSender;
         private readonly ILogger _logger;
 
-        public OmegaHostedService(TracingDiagnosticProcessorObserver tracingDiagnosticProcessorObserver, ILoggerFactory loggerFactory, IMessageSender messageSender)
+        public OmegaHostedService(DiagnosticListenerObserver tracingDiagnosticProcessorObserver, ILoggerFactory loggerFactory, IMessageSender messageSender)
         {
             _logger = loggerFactory.CreateLogger(typeof(OmegaHostedService));
             _diagnosticObserver = tracingDiagnosticProcessorObserver;
@@ -59,6 +60,7 @@ namespace Servicecomb.Saga.Omega.AspNetCore
 
         private void RunConnect()
         {
+
             DiagnosticListener.AllListeners.Subscribe(_diagnosticObserver);
             _messageSender.OnConnected();
         }

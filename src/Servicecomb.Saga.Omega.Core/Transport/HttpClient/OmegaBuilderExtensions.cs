@@ -26,7 +26,7 @@ namespace Servicecomb.Saga.Omega.Core.Transport.HttpClient
     {
         public static OmegaBuilder AddHttpClient([NotNull]this OmegaBuilder builder)
         {
-            builder.Services.AddSingleton<ITracingDiagnosticProcessor, HttpClientDiagnosticProcessor>();
+            builder.Services.AddSingleton<IDiagnosticItercept, HttpClientDiagnosticIntercept>();
 
             return builder;
         }

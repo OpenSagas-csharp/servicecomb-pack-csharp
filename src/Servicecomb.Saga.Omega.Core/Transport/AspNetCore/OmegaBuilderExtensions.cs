@@ -27,7 +27,7 @@ namespace Servicecomb.Saga.Omega.Core.Transport.AspNetCore
         public static OmegaBuilder AddHosting([NotNull]this OmegaBuilder builder)
         {
 
-            builder.Services.AddSingleton<ITracingDiagnosticProcessor, HostingDiagnosticProcessor>();
+            builder.Services.AddSingleton<IDiagnosticItercept, HostingDiagnosticIntercept>();
 
             return builder;
         }

@@ -16,6 +16,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,7 +43,7 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
         {
             builder.Services.AddSingleton<IHostedService, OmegaHostedService>();
             builder.Services.AddSingleton<IMessageSerializer, JsonMessageFormat>();
-            builder.Services.AddSingleton<ITracingDiagnosticProcessor, HostingDiagnosticProcessor>();
+            builder.Services.AddSingleton<IDiagnosticItercept, HostingDiagnosticIntercept>();
             builder.Services.AddSingleton<ILoggerFactory, NullLoggerFactory>();
             builder.Services.AddSingleton(typeof(IIdGenerator<string>), typeof(UniqueIdGenerator));
             builder.Services.AddSingleton<IMessageHandler, CompensationMessageHandler>();
@@ -74,7 +75,7 @@ namespace Servicecomb.Saga.Omega.AspNetCore.Extensions
 
         public static OmegaBuilder AddDiagnostics(this OmegaBuilder builder)
         {
-            builder.Services.AddSingleton<TracingDiagnosticProcessorObserver>();
+            builder.Services.AddSingleton<DiagnosticListenerObserver>();
             return builder;
         }
     }
