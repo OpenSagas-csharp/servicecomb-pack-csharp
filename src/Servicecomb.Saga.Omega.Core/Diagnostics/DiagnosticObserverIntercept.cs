@@ -40,22 +40,24 @@ namespace Servicecomb.Saga.Omega.Core.Diagnostics
             _diagnosticItercept = diagnosticItercept;
             _dictionary = new Dictionary<string, MethodInfo>();
             Inint();
-
-
         }
+
 
         public void OnCompleted()
         {
             // just do nothing here
         }
 
+
         public void OnError(Exception error)
         {
             // just do nothing here
         }
 
+
         public void OnNext(KeyValuePair<string, object> value)
         {
+            //The DiagnosticSource/DiagnosticListener code is thread safe, but the callback code also needs to be thread safe.
             lock (_object)
             {
                 if (!_dictionary.ContainsKey(value.Key)) return;
@@ -67,7 +69,8 @@ namespace Servicecomb.Saga.Omega.Core.Diagnostics
 
         }
 
-        void Inint()
+
+        private void Inint()
         {
 
 
