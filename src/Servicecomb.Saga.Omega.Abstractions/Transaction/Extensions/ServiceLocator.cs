@@ -43,7 +43,7 @@ namespace Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions
 
         public TService GetInstance<TService>()
         {
-            return (TService) _currentServiceProvider.GetService(typeof(TService));
+            return (TService)_currentServiceProvider.GetService(typeof(TService));
         }
     }
 }

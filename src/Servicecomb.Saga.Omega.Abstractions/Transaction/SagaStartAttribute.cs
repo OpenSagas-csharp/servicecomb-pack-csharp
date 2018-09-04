@@ -25,7 +25,7 @@ using ServiceLocator = Servicecomb.Saga.Omega.Abstractions.Transaction.Extension
 namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class SagaStartAttribute: OnMethodBoundaryAspect
+    public class SagaStartAttribute : OnMethodBoundaryAspect
     {
         private readonly ILogger _logger = LogManager.GetLogger(typeof(SagaStartAttribute));
 
@@ -39,7 +39,7 @@ namespace Servicecomb.Saga.Omega.Abstractions.Transaction
         {
             _omegaContext = (OmegaContext)ServiceLocator.Current.GetInstance(typeof(OmegaContext));
             _sagaStartAnnotationProcessor =
-                (ISagaStartEventAwareInterceptor) ServiceLocator.Current.GetInstance(typeof(ISagaStartEventAwareInterceptor));
+                (ISagaStartEventAwareInterceptor)ServiceLocator.Current.GetInstance(typeof(ISagaStartEventAwareInterceptor));
         }
 
 
@@ -54,12 +54,12 @@ namespace Servicecomb.Saga.Omega.Abstractions.Transaction
         {
             _sagaStartAnnotationProcessor.PostIntercept(_omegaContext.GetGlobalTxId(), args.Method.Name);
             _logger.Debug($"Transaction with context {_omegaContext} has finished.");
-            
+
         }
 
         public override void OnException(MethodExecutionArgs args)
         {
-            _sagaStartAnnotationProcessor.OnError(null,"",args.Exception);
+            _sagaStartAnnotationProcessor.OnError(null, "", args.Exception);
             _logger.Error($"Transaction {_omegaContext.GetGlobalTxId()} failed.", args.Exception);
         }
 
