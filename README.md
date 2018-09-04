@@ -174,7 +174,7 @@ Omega.Sample.Car -> CarBookingService:
 
 那么再来看看数据是否和我们预期感觉一样讷,相信聪明的小伙伴应该知道套路是什么了:
 
-![TIM图片20180827220009.png](imgs/TIM图片20180827220009.png)
+![CarAbortDatabase.png](imgs/CarAbortDatabase.png)
 
 关于 car-service 的红框状态描述相信大家就很清楚了,历经了开始->中止->结束,最后整个 Booking 方式完成
 
@@ -280,11 +280,11 @@ Omega.Sample.Hotel -> HotelBookingService:
 
 Car-Service 补偿方法触发执行命中断点如下图:
 
-![TIM图片20180827222559.png](imgs/TIM图片20180827222559.png)
+![DebugPicture.png](imgs/DebugPicture.png)
 
 数据库事务链条状态图(聪明的你观察到了那个补偿事件的记录了讷):
 
-![TIM图片20180827222705.png](imgs/TIM图片20180827222705.png)
+![HotleAbort-Scenario.png](imgs/HotleAbort-Scenario.png)
 
 #### 测试Booking-Service 最后调用异常
 
@@ -310,15 +310,37 @@ Car-Service 补偿方法触发执行命中断点如下图:
 
 > 关于 Command 表大致用来存储需要补偿的命令的,相应的alpha-server有定时服务在刷这个表,一直补偿成功为止,来保证最终的分布式事务的一致性
 
-![TIM图片20180827223755.png](imgs/TIM图片20180827223755.png)
+![CarAndCompensate.png](imgs/CarAndCompensate.png)
 
 > 相信你已经注意到了我们的两个预定服务都触发了补偿逻辑(红框所示)
 
-![TIM图片20180827223717.png](imgs/TIM图片20180827223717.png)
+![BookingAbortDatabase.png](imgs/BookingAbortDatabase.png)
 
 #### 如何在服务超时情况维持分布式事务测试
 
-未完待续...
+```csharp
+[HttpGet, SagaStart(TimeOut = 3)]
+        [Route("book3")]
+        public ActionResult Book3()
+        {
+            // init basic httpclient
+            var httpClient = new HttpClient();
+            // mark a reservation of car , this will be throw a exception from car-service
+            httpClient.GetAsync("http://localhost:5002/api/values").Wait();
+            // book a hotel
+            httpClient.GetAsync("http://localhost:5003/api/values").Wait();
+            Thread.Sleep(5000);
+            return Ok("ok");
+        }
+```
+
+> 事件表详情
+![timeoutdatabase-txEvent.png](imgs/timeoutdatabase-txEvent.png)
+> 超时表详情
+![timeoutdatabase-txEvent.png](imgs/timeoutdatabase-TxTime.png)
+> 补偿表详情
+![timeoutdatabase-txCompenste.png](imgs/timeoutdatabase-txCompenste.png)
+
 
 
 
