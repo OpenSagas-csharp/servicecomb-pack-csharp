@@ -9,7 +9,7 @@ The .NET  omega   agent for Apache incubator-servicecomb-saga
 
 ## 使用前置条件说明
 
-> 如果还有同学对Saga还不甚了解的同学,可以参考Saga官方中文地址[https://github.com/apache/incubator-servicecomb-saga/blob/master/README_ZH.md](https://github.com/apache/incubator-servicecomb-saga/blob/master/README_ZH.md),同时可以参考此项目贡献者之一的[@WithLin](https://github.com/WithLin)的一篇中文说明文章,该地址如下:[https://www.jianshu.com/p/dfe7a4c05992](https://www.jianshu.com/p/dfe7a4c05992),文章由浅入深的讲述了分布式事务在微服务场景下的重要性,以及Saga对分布式事务的大致实现方式和后续的思考
+> 如果还有同学对Saga还不甚了解的同学,可以参考Saga官方中文地址[地址](https://github.com/apache/incubator-servicecomb-saga/blob/master/README_ZH.md),同时可以参考此项目贡献者之一的[WithLin](https://github.com/WithLin)的一篇中文说明文章,该地址如下:[地址](https://www.cnblogs.com/WithLin/p/9556413.html),文章由浅入深的讲述了分布式事务在微服务场景下的重要性,以及Saga对分布式事务的大致实现方式和后续的思考
 
 * **必须** 你需要可用的一个本地或者远程的数据库(mysql或者postpresql)作为Saga持久化分布式事务事件的持久化存储,当然只要官方支持的Database Provider即可,具体idea数据库配置如下图,注意数据库的名字与您真实数据库名一致
 
