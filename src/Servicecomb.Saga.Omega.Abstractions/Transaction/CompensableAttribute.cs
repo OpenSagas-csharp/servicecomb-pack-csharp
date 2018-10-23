@@ -17,15 +17,14 @@
 
 using System;
 using System.Reflection;
-using MethodBoundaryAspect.Fody.Attributes;
 using Servicecomb.Saga.Omega.Abstractions.Context;
 using Servicecomb.Saga.Omega.Abstractions.Logging;
 using ServiceLocator = Servicecomb.Saga.Omega.Abstractions.Transaction.Extensions.ServiceLocator;
 
 namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 {
-    [AttributeUsage(AttributeTargets.Method)]
-    public class CompensableAttribute : OnMethodBoundaryAspect
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Module)]
+    public class CompensableAttribute : Attribute
     {
         public int Retries { get; set; }
 
@@ -48,6 +47,22 @@ namespace Servicecomb.Saga.Omega.Abstractions.Transaction
 
         private readonly string _parenttxId;
 
+        protected object InitInstance;
+
+        protected MethodBase InitMethod;
+
+        protected Object[] Args;
+
+        public CompensableAttribute()
+        {
+        }
+
+        public void Init(object instance, MethodBase method, object[] args)
+        {
+            InitMethod = method;
+            InitInstance = instance;
+            Args = args;
+        }
 
         public CompensableAttribute(string compensationMethod, int retryDelayInMilliseconds = 0, int timeout = 0, int retries = 0)
         {
@@ -64,28 +79,28 @@ namespace Servicecomb.Saga.Omega.Abstractions.Transaction
             _parenttxId = _omegaContext.GetGlobalTxId();
         }
 
-        public override void OnEntry(MethodExecutionArgs args)
+        public void OnEntry()
         {
-            var type = args.Instance.GetType();
+            var type = InitInstance.GetType();
             _compensationContext.AddCompensationContext(type.GetMethod(CompensationMethod, BindingFlags.Instance | BindingFlags.NonPublic), type);
 
             _omegaContext.NewLocalTxId();
-            var paramBytes = _messageFormat.Serialize(args.Arguments);
+            var paramBytes = _messageFormat.Serialize(Args);
 
-            _logger.Debug($"Initialized context {_omegaContext} before execution of method {args.Method.Name}");
+            _logger.Debug($"Initialized context {_omegaContext} before execution of method {InitMethod.Name}");
             _recoveryPolicy.BeforeApply(_compensableInterceptor, _omegaContext, _parenttxId, Retries, Timeout, CompensationMethod, paramBytes);
         }
 
-        public override void OnExit(MethodExecutionArgs args)
+        public  void OnExit()
         {
             _recoveryPolicy.AfterApply(_compensableInterceptor, _parenttxId, CompensationMethod);
             _logger.Debug($"Transaction with context {_omegaContext} has finished.");
         }
 
-        public override void OnException(MethodExecutionArgs args)
+        public  void OnException(Exception exception)
         {
-            _logger.Error($"Transaction {_omegaContext.GetGlobalTxId()} failed.", args.Exception);
-            _recoveryPolicy.ErrorApply(_compensableInterceptor, _parenttxId, CompensationMethod, args.Exception);
+            _logger.Error($"Transaction {_omegaContext.GetGlobalTxId()} failed.", exception);
+            _recoveryPolicy.ErrorApply(_compensableInterceptor, _parenttxId, CompensationMethod, exception);
         }
 
     }
