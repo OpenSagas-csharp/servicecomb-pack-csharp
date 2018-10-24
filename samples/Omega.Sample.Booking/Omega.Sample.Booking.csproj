@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MethodBoundaryAspect.Fody" Version="1.0.66" />
+    <PackageReference Include="MethodDecorator.Fody" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
   </ItemGroup>
 

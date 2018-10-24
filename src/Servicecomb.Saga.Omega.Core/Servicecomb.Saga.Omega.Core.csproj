@@ -14,6 +14,7 @@
     <PackageReference Include="Grpc" Version="1.14.0" />
     <PackageReference Include="Grpc.Core" Version="1.14.0" />
     <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
+    <PackageReference Include="MethodDecorator.Fody" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
@@ -27,6 +28,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Servicecomb.Saga.Omega.Abstractions\Servicecomb.Saga.Omega.Abstractions.csproj" />
     <ProjectReference Include="..\Servicecomb.Saga.Omega.Protocol\Servicecomb.Saga.Omega.Protocol.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AssemblyInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
