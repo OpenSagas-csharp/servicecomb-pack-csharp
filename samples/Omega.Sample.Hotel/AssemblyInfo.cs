@@ -1,5 +1,4 @@
-﻿using System;
-using Servicecomb.Saga.Omega.Abstractions.Transaction;
+﻿using Servicecomb.Saga.Omega.Abstractions.Transaction;
 
 
 [module: SagaStart]
